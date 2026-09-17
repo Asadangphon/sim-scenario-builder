@@ -639,7 +639,7 @@ table.chk td:first-child{width:34px;text-align:center;font-weight:800;color:var(
       "state2": [{"topic":"","inquiry":""},{"topic":"","inquiry":""},{"topic":"","inquiry":""},{"topic":"","inquiry":""}],
       "state3": [{"topic":"","inquiry":""},{"topic":"","inquiry":""},{"topic":"","inquiry":""},{"topic":"","inquiry":""}]
     }},
-  "indicators": [{"indicator":"", "criteria":""}],
+  "indicators": [{"indicator":"", "criteria":"", "time":"", "comments":""}],
   "logistics": {"equipment":[], "supplies":[], "medications":[], "moulage_props":[], "manikin":""},
   "references": {"simulation":[], "clinical":[]},
   "appendix": {"cxr":"", "ekg":"", "lab":"", "imaging":""},
@@ -4474,9 +4474,15 @@ var CASES = CASES_A.concat(CASES_B);
     return '<w:tc><w:tcPr><w:tcW w:w="'+w+'" w:type="dxa"/>' +
       (o.shd?'<w:shd w:val="clear" w:color="auto" w:fill="'+o.shd+'"/>':'') +
       (o.span?'<w:gridSpan w:val="'+o.span+'"/>':'') +
-      '<w:vAlign w:val="top"/></w:tcPr>' +
+      '<w:vAlign w:val="'+(o.vAlign||'top')+'"/></w:tcPr>' +
       para(text, {b:o.b, i:o.i, sz:o.sz||18, color:o.color, align:o.align, after:0}) +
       '</w:tc>';
+  }
+  /* แยกเกณฑ์ "ผ่าน = ... | ไม่ผ่าน = ..." ให้ขึ้นบรรทัดใหม่คนละบรรทัดในเอกสาร Word — ต้องตรงกับ formatPassFailLines() ใน app.js */
+  function formatPassFailLines(text){
+    text = String(text==null?'':text);
+    if(!text || text.indexOf('|')===-1) return text;
+    return text.split(/\s*\|\s*/).join('\n');
   }
   /* เซลล์ role assignment: บรรทัดชื่อผู้รับผิดชอบตัวหนา ต่อด้วยรายละเอียดบทบาทตัวปกติ */
   function roleNameCell(name, desc, w){
@@ -4869,18 +4875,22 @@ var CASES = CASES_A.concat(CASES_B);
     /* indicators */
     x += pageBreak();
     x += secHead('8. PERFORMANCE INDICATORS / ASSESSMENT CRITERIA');
-    var iw = [420,2800,4526,600,700,1500];
+    var iw = [420,2500,4000,900,550,650,1526];
     var irows = [ cell('#',iw[0],{b:true,shd:'EDF1F5',align:'center'}) +
       cell('Performance Indicator',iw[1],{b:true,shd:'EDF1F5'}) +
       cell('Expected Action / Criteria',iw[2],{b:true,shd:'EDF1F5'}) +
-      cell('Met',iw[3],{b:true,shd:'EDF1F5',align:'center'}) +
-      cell('Not Met',iw[4],{b:true,shd:'EDF1F5',align:'center'}) +
-      cell('Comments',iw[5],{b:true,shd:'EDF1F5'}) ];
+      cell('Time (min)',iw[3],{b:true,shd:'EDF1F5',align:'center'}) +
+      cell('Met',iw[4],{b:true,shd:'EDF1F5',align:'center'}) +
+      cell('Not Met',iw[5],{b:true,shd:'EDF1F5',align:'center'}) +
+      cell('Comments',iw[6],{b:true,shd:'EDF1F5'}) ];
     for(var q=0;q<8;q++){
       var ind = (D.indicators||[])[q] || {};
       irows.push(cell(String(q+1),iw[0],{align:'center'}) + cell(ind.indicator,iw[1],{sz:16}) +
-        cell(ind.criteria,iw[2],{sz:16}) + cell('☐',iw[3],{align:'center'}) +
-        cell('☐',iw[4],{align:'center'}) + cell('',iw[5]));
+        cell(formatPassFailLines(ind.criteria),iw[2],{sz:16}) +
+        cell(ind.time||'',iw[3],{align:'center',vAlign:'center'}) +
+        cell('☐',iw[4],{align:'center',vAlign:'center'}) +
+        cell('☐',iw[5],{align:'center',vAlign:'center'}) +
+        cell(ind.comments||'',iw[6],{sz:16}));
     }
     x += table(irows, iw);
 
@@ -5660,11 +5670,12 @@ function coerce(input){
   var indArr = Array.isArray(indsRaw) ? indsRaw
     : (indsRaw && typeof indsRaw==='object' ? Object.keys(indsRaw).map(function(k){return indsRaw[k];}) : []);
   var indicators = indArr.map(function(x){
-    if(typeof x==='string') return {indicator:x, criteria:''};
+    if(typeof x==='string') return {indicator:x, criteria:'', time:'', comments:''};
     return {indicator: asText(pick(x,'indicator','name','item','performanceindicator')),
-            criteria: asText(pick(x,'criteria','expected','expectedaction','passfail','standard'))};
+            criteria: asText(pick(x,'criteria','expected','expectedaction','passfail','standard')),
+            time:'', comments:''};
   });
-  while(indicators.length<8) indicators.push({indicator:'',criteria:''});
+  while(indicators.length<8) indicators.push({indicator:'',criteria:'',time:'',comments:''});
 
   var rsRaw = pick(src,'runsummary','summary','quickreference');
   var rsArr = Array.isArray(rsRaw) ? rsRaw : [];
@@ -5983,7 +5994,7 @@ function normalize(o){
   }
   var m = merge(d, o);
   if(!Array.isArray(m.indicators)) m.indicators=[];
-  while(m.indicators.length<8) m.indicators.push({indicator:'',criteria:''});
+  while(m.indicators.length<8) m.indicators.push({indicator:'',criteria:'',time:'',comments:''});
   if(!Array.isArray(m.objectives)) m.objectives=[];
   while(m.objectives.length<4) m.objectives.push('');
   if(!Array.isArray(m.states)) m.states=[];
@@ -6075,6 +6086,13 @@ function useCase(id){
    ===================================================================== */
 function ed(path, val, ph){
   return '<div class="ed" contenteditable="true" data-k="'+path+'" data-ph="'+(ph||'')+'">'+nl(val||'')+'</div>';
+}
+/* แยกเกณฑ์ "ผ่าน = ... | ไม่ผ่าน = ..." (หรือเกณฑ์อื่นที่คั่นด้วย " | ") ให้ขึ้นบรรทัดใหม่คนละบรรทัด
+   ใช้ทั้งตอนแสดงผลบนหน้าจอและตอนสร้างเอกสาร Word — ถ้าไม่มี "|" จะคืนค่าเดิมโดยไม่เปลี่ยนแปลง */
+function formatPassFailLines(text){
+  text = String(text==null?'':text);
+  if(!text || text.indexOf('|')===-1) return text;
+  return text.split(/\s*\|\s*/).join('\n');
 }
 /* ตัดเครื่องหมายหัวข้อเดิม (1. / - / •) ที่อาจติดมากับข้อมูลเก่า ก่อนแยกเป็นรายการใหม่ */
 function stripMarker(s){ return String(s||'').replace(/^\s*(?:[-•*]|\d+[.)])\s*/,'').trim(); }
@@ -6576,13 +6594,15 @@ function render(){
   h += '</table>';
 
   h += '<h2 class="sec pb">8. PERFORMANCE INDICATORS / ASSESSMENT CRITERIA</h2>';
-  h += '<table><tr><th style="width:26px">#</th><th style="width:26%">Performance Indicator</th><th>Expected Action / Criteria</th>'+
-       '<th style="width:38px">Met</th><th style="width:48px">Not Met</th><th style="width:16%">Comments</th></tr>';
+  h += '<table><tr><th style="width:26px">#</th><th style="width:23%">Performance Indicator</th><th>Expected Action / Criteria</th>'+
+       '<th style="width:60px">Time (min)</th><th style="width:38px">Met</th><th style="width:48px">Not Met</th><th style="width:16%">Comments</th></tr>';
   for(var q=0;q<8;q++){
     var ind = DATA.indicators[q]||{};
     h += '<tr><td style="text-align:center">'+(q+1)+'</td><td>'+ed('indicators['+q+'].indicator',ind.indicator,'ตัวชี้วัด')+'</td>'+
-      '<td>'+ed('indicators['+q+'].criteria',ind.criteria,'เกณฑ์ผ่าน/ไม่ผ่านที่วัดได้')+'</td>'+
-      '<td style="text-align:center">☐</td><td style="text-align:center">☐</td><td></td></tr>';
+      '<td>'+ed('indicators['+q+'].criteria',formatPassFailLines(ind.criteria),'เกณฑ์ผ่าน/ไม่ผ่านที่วัดได้ เช่น ผ่าน = ... (ขึ้นบรรทัดใหม่) ไม่ผ่าน = ...')+'</td>'+
+      '<td style="text-align:center;vertical-align:middle">'+ed('indicators['+q+'].time',ind.time,'นาทีที่ทำ')+'</td>'+
+      '<td style="text-align:center;vertical-align:middle">☐</td><td style="text-align:center;vertical-align:middle">☐</td>'+
+      '<td>'+ed('indicators['+q+'].comments',ind.comments,'หมายเหตุ')+'</td></tr>';
   }
   h += '</table>';
 
