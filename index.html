@@ -469,7 +469,7 @@ table.chk td:first-child{width:34px;text-align:center;font-weight:800;color:var(
     <h2>คลังเคสพร้อมใช้</h2>
     <p class="hint">เคสที่เขียนครบทั้ง 4 states, วัตถุประสงค์ 4 ข้อ, ตัวชี้วัด 8 ข้อ และประเด็น debriefing 12 ข้อ
       เลือกแล้วแก้เป็นบริบทของหน่วยงานท่านได้ทันที &mdash; ทุกเคสต้องผ่านการตรวจสอบโดยผู้เชี่ยวชาญก่อนนำไปใช้สอนจริง</p>
-    <input type="text" id="caseSearch" placeholder="ค้นหา เช่น sepsis, หัวใจ, ห้องคลอด, ICU" oninput="renderCases()">
+    <input type="text" id="caseSearch" placeholder="ค้นหา เช่น CCD, sepsis, หัวใจ, ห้องคลอด, ICU" oninput="renderCases()">
     <div class="caselist" id="caseList"></div>
   </div>
 </section>
@@ -4339,7 +4339,2389 @@ var CASES_B = [
   }
  }
 ];
-var CASES = CASES_A.concat(CASES_B);
+/* CASE LIBRARY — part C: CCD Core Critical Care Simulation Program (SC-01 ถึง SC-06) — เพิ่ม 16 พ.ย. 2569 */
+var CASES_C = [
+ {
+  "id": "ccd-vent-desat",
+  "name": "SC-01 ผู้ป่วยใช้เครื่องช่วยหายใจ SpO₂ ลดลง (Ventilated patient with desaturation)",
+  "setting": "Critical Care Unit (CCD)",
+  "tag": "DOPE · closed suction · ABG/POCT · PPE ห้อง negative pressure · speak up",
+  "data": {
+   "meta": {
+    "title": "การประเมินและแก้ไขภาวะ SpO₂ ลดลงในผู้ป่วยใช้เครื่องช่วยหายใจ ในห้อง Relative negative pressure",
+    "patient_name": "วิชัย ใจมั่น (Wichai Jaiman)",
+    "course": "Core Critical Care Nursing Simulation Program — Critical Care Unit (CCD)",
+    "developed": "ฝ่ายวิชาการพยาบาล และ Clinical Nurse Educator โรงพยาบาลกรุงเทพ สำนักงานใหญ่",
+    "form_no": "",
+    "verified_date": "",
+    "approved": "",
+    "reviewed": ""
+   },
+   "time": {
+    "setup": 5,
+    "simulation": 15,
+    "debriefing": 25,
+    "total": 45
+   },
+   "classification": {
+    "discipline": "RNs",
+    "participant": "Team",
+    "level": "Advanced Beginner – Competent",
+    "fidelity": "High-Fidelity",
+    "scenario_type": "Progressive / Multi-State (4 states)"
+   },
+   "goals": {
+    "concept": "Patient Safety, Airway & Equipment Check, Infection Control",
+    "practice": "Deliberate Practice, Systems-Based Practice",
+    "participant": "Team",
+    "evaluation": "Formative (RN ประจำปี) / Summative (พยาบาลใหม่ระยะ 3)"
+   },
+   "objectives": [
+    "สามารถตรวจความดันห้อง negative pressure และสวม PPE พร้อม N95 seal check ได้ครบก่อนเข้าห้องภายใน 2 นาที",
+    "สามารถค้นหาสาเหตุ SpO₂ ลดลงตามแนวทาง DOPE โดยตรวจขีด ETT และ ETCO₂ ได้ภายใน 2 นาทีหลัง alarm",
+    "สามารถดูดเสมหะด้วย closed suction ครั้งละไม่เกิน 15 วินาที และแปลผล ABG จาก POCT พร้อมคำนวณ P/F ratio ได้ถูกต้อง",
+    "สามารถรายงานแพทย์ด้วย ISBAR ครบ 5 องค์ประกอบ โดยระบุผล ABG และ P/F ratio และทวนคำสั่งกลับได้"
+   ],
+   "demographics": {
+    "name": "วิชัย ใจมั่น (Wichai Jaiman)",
+    "hn": "69-0000101",
+    "age": "58 ปี",
+    "gender": "ชาย",
+    "weight": "70 kg",
+    "arrival": "รับไว้ CCD วันที่ 2 ด้วยปอดอักเสบรุนแรง ใส่ท่อช่วยหายใจ",
+    "code_status": "Full code",
+    "diagnosis": "Severe pneumonia with acute respiratory failure, สงสัยวัณโรคปอด (รอผล AFB)",
+    "allergies": "ปฏิเสธการแพ้ยาและอาหาร",
+    "pmh": "Type 2 DM, สูบบุหรี่ 30 pack-years"
+   },
+   "prebriefing": "ทบทวนวัตถุประสงค์ของสถานการณ์ ย้ำ fiction contract, Basic Assumption และการรักษาความลับ แนะนำหุ่น อุปกรณ์ และสิ่งที่ทำได้/ทำไม่ได้กับหุ่น ยาทุกชนิดเป็นยาจำลอง ข้อมูลผู้ป่วยเป็นข้อมูลสมมติทั้งหมด จากนั้นอ่านข้อมูลส่งเวรให้ผู้เรียนฟัง: ผู้ป่วยชาย 58 ปี น้ำหนัก 70 กก. Severe pneumonia วันที่ 2 ใน CCD สงสัยวัณโรคปอด (รอผล AFB) อยู่ห้อง relative negative pressure On ETT No. 7.5 ขีด 22 ซม. ที่มุมปาก Ventilator VC: TV 450 mL, RR 18, PEEP 8, FiO₂ 0.5 ได้ fentanyl 25 mcg/ชม. และ propofol ตามคำสั่ง (เป้าหมาย RASS −1 ถึง 0) เวรก่อน SpO₂ 95–96% เสมหะเหนียวสีเหลืองปานกลาง ดูดครั้งล่าสุด 3 ชม. ก่อน “ห้องนี้ alarm ดังบ่อย ฝากดูด้วยนะ”",
+   "moulage": "หุ่นใส่ ETT No. 7.5 ติดพลาสเตอร์ที่ขีด 22 ซม. ต่อ closed suction และเครื่องช่วยหายใจ เสมหะจำลองเหนียวสีเหลืองในสาย หน้าห้องติดป้าย Airborne precaution มาตรวัดความดันห้อง และจุดสวม PPE",
+   "simulator": {
+    "manikin": "หุ่น High-Fidelity ผู้ใหญ่ ใส่ ETT ต่อเครื่องช่วยหายใจ (หรือ ventilator simulator หน้าจอ)",
+    "initial_vs": "BP 128/76, HR 98, RR 18 (set), SpO₂ 95% FiO₂ 0.5, Temp 38.0°C, Ppeak 28 cmH₂O",
+    "airway": "ETT No. 7.5 ขีด 22 ซม. มี ETCO₂ waveform",
+    "lung": "Coarse crepitation ทั้งสองข้าง เท่ากัน",
+    "heart": "Regular, no murmur",
+    "bowel": "Normoactive",
+    "voice": "ไม่มีเสียงพูด (ใส่ท่อ) ไอและต้านเครื่องได้",
+    "iv": "Peripheral IV 2 เส้น: fentanyl และ propofol ผ่าน infusion pump",
+    "monitor": "ECG, NIBP ทุก 5 นาที, SpO₂, ETCO₂ waveform, ค่าเครื่องช่วยหายใจ (Ppeak, TV, RR)",
+    "special": "ตั้ง High-pressure alarm 40 cmH₂O · มาตรวัดความดันห้องแสดงค่าลบ"
+   },
+   "states": [
+    {
+     "label": "BASELINE",
+     "condition": "ผู้ป่วยสงบ RASS 0 หายใจสัมพันธ์กับเครื่อง มาตรวัดความดันห้องแสดงค่าลบ",
+     "vs": {
+      "time": "0-2",
+      "rhythm": "Sinus rhythm",
+      "bp": "128/76 (MAP 93)",
+      "o2sat": "95% FiO₂ 0.5",
+      "rr": "18",
+      "hr": "98",
+      "temp": "38.0°C",
+      "pain": "CPOT 0",
+      "gcs": "E4V1(T)M6 = 11T",
+      "lung": "Coarse crepitation ทั้งสองข้าง",
+      "heart": "Regular",
+      "bowel": "Normoactive",
+      "mews": "3"
+     },
+     "vocalization": "ไม่มีเสียงพูด ลืมตามองตามได้",
+     "confederate": "พยาบาลเวรก่อน: “ห้องนี้ alarm ดังบ่อย ฝากดูด้วยนะ”",
+     "expected_actions": "ตรวจค่าความดันห้องก่อนเข้า · สวม PPE ครบ + N95 seal check · ระบุตัวผู้ป่วย 2 ตัวบ่งชี้ · ประเมิน ABC · ตรวจขีด ETT, ค่าเครื่องช่วยหายใจ และ alarm limit",
+     "operator_notes": "ตั้งค่าตาม baseline ถ้าผู้เรียนเข้าห้องโดยไม่ตรวจความดันห้อง/ไม่สวม N95 ให้จดเวลาไว้ใช้ตอน debriefing ไม่ต้องหยุดสถานการณ์",
+     "transition": "เปลี่ยนเมื่อผู้เรียนเข้าห้องและประเมินเบื้องต้นแล้ว หรือเมื่อครบ 2 นาที"
+    },
+    {
+     "label": "STATE 1",
+     "condition": "High-pressure alarm ดัง ผู้ป่วยไอ ต้านเครื่อง กัดท่อ ได้ยินเสียงเสมหะครืดคราด เสียงหายใจสองข้างเท่ากัน Ppeak 45 cmH₂O",
+     "vs": {
+      "time": "2-7",
+      "rhythm": "Sinus tachycardia",
+      "bp": "150/90 (MAP 110)",
+      "o2sat": "86% FiO₂ 0.5",
+      "rr": "30",
+      "hr": "122",
+      "temp": "38.0°C",
+      "pain": "CPOT 4",
+      "gcs": "E4V1(T)M6 = 11T",
+      "lung": "Coarse rhonchi ทั้งสองข้าง เท่ากัน",
+      "heart": "Tachycardia regular",
+      "bowel": "Normoactive",
+      "mews": "7"
+     },
+     "vocalization": "ไอ ต้านเครื่อง กัดท่อ",
+     "confederate": "พยาบาลคนที่สอง: “ให้ช่วยอะไรบ้างคะ”",
+     "expected_actions": "ตอบสนอง alarm ทันที ไม่ปิดเสียงทิ้ง · ประเมิน DOPE: ขีดท่อยัง 22 ซม. และ ETCO₂ มีรูปคลื่น → ท่อไม่หลุด · เพิ่ม O₂ 100% · ใส่ bite block · ดูดเสมหะ closed suction พร้อม pre-oxygenation ครั้งละ ≤ 15 วินาที · ขอความช่วยเหลือ หัวหน้าทีมมอบหมายบทบาท",
+     "operator_notes": "ถ้าไม่ดูดเสมหะภายใน 3 นาที ให้ SpO₂ ลดเป็น 80% Ppeak 50 และให้แพทย์ (confederate) โทรเข้ามาถามอาการเพื่อดึงผู้เรียนกลับมาประเมิน ถ้าปลดเครื่องบีบ BVM ต้องต่อ HEPA filter",
+     "transition": "เปลี่ยนเมื่อดูดเสมหะด้วย closed suction ได้เสมหะ หรือเมื่อครบ 5 นาที"
+    },
+    {
+     "label": "STATE 2",
+     "condition": "ได้เสมหะเหนียวข้นปริมาณมาก ผู้ป่วยสงบลง Ppeak 30 cmH₂O แต่ออกซิเจนยังต่ำแม้ FiO₂ 1.0",
+     "vs": {
+      "time": "7-12",
+      "rhythm": "Sinus tachycardia",
+      "bp": "138/82 (MAP 101)",
+      "o2sat": "92% FiO₂ 1.0",
+      "rr": "24",
+      "hr": "108",
+      "temp": "38.0°C",
+      "pain": "CPOT 1",
+      "gcs": "E4V1(T)M6 = 11T",
+      "lung": "Crepitation ทั้งสองข้าง rhonchi ลดลง",
+      "heart": "Tachycardia regular",
+      "bowel": "Normoactive",
+      "mews": "5"
+     },
+     "vocalization": "สงบลง หายใจสัมพันธ์กับเครื่องมากขึ้น",
+     "confederate": "แพทย์ (ทางโทรศัพท์): “ตอนนี้ ABG เป็นอย่างไร P/F เท่าไร”",
+     "expected_actions": "เก็บ ABG และวิเคราะห์ด้วย POCT ถูกวิธี (ไล่ฟองอากาศ ระบุ FiO₂) · แปลผล: pH 7.28, PaCO₂ 52, PaO₂ 64, HCO₃ 24 = acute respiratory acidosis + hypoxemia รุนแรง · คำนวณ P/F = 64 · รายงานแพทย์ ISBAR เสนอ CXR / ปรับเครื่อง / ประเมิน sedation",
+     "operator_notes": "ส่งใบผล ABG จำลองเมื่อผู้เรียนวิเคราะห์ POCT ถูกขั้นตอน ถ้ารายงานโดยไม่มี P/F ให้แพทย์ถามกลับ",
+     "transition": "เปลี่ยนเมื่อรายงาน ISBAR ครบและทวนคำสั่งกลับ หรือเมื่อครบ 5 นาที"
+    },
+    {
+     "label": "STATE 3",
+     "condition": "แพทย์สั่งเพิ่ม PEEP เป็น 12 cmH₂O ลด FiO₂ เป็น 0.7 ออกซิเจนดีขึ้น แพทย์เดินเข้าห้องโดยไม่สวม N95",
+     "vs": {
+      "time": "12-15",
+      "rhythm": "Sinus rhythm",
+      "bp": "130/78 (MAP 95)",
+      "o2sat": "94% FiO₂ 0.7",
+      "rr": "20",
+      "hr": "100",
+      "temp": "37.9°C",
+      "pain": "CPOT 0",
+      "gcs": "E4V1(T)M6 = 11T",
+      "lung": "Crepitation ทั้งสองข้าง",
+      "heart": "Regular",
+      "bowel": "Normoactive",
+      "mews": "3"
+     },
+     "vocalization": "สงบ RASS −1",
+     "confederate": "แพทย์ (เดินเข้าห้องโดยสวมเพียง surgical mask): “ขอดูคนไข้หน่อยครับ”",
+     "expected_actions": "ทักท้วงเรื่อง N95 อย่างสุภาพและชัดเจน (speak up) · ทวนคำสั่งปรับเครื่องกลับ · ประเมินซ้ำหลังปรับ PEEP · บันทึก event note และค่าเครื่องช่วยหายใจที่เปลี่ยน",
+     "operator_notes": "ให้แพทย์เดินเข้าประตูช้า ๆ เพื่อเปิดโอกาสให้ทักท้วง ถ้าไม่มีใครทัก ให้แพทย์เข้าไปถึงเตียง",
+     "transition": "จบสถานการณ์เมื่อบันทึก event note เสร็จ หรือเมื่อครบ 15 นาที"
+    }
+   ],
+   "run_summary": [
+    {
+     "state": "Baseline",
+     "status": "BP 128/76, HR 98, SpO₂ 95%, Ppeak 28",
+     "actions": "ตรวจความดันห้อง, PPE + N95 seal check, ประเมิน ABC/ขีดท่อ/alarm limit",
+     "focus": "ความปลอดภัยของบุคลากรและการตรวจอุปกรณ์ก่อนเริ่มดูแล"
+    },
+    {
+     "state": "State 1",
+     "status": "SpO₂ 86%, HR 122, Ppeak 45, ETCO₂ มีรูปคลื่น",
+     "actions": "DOPE, O₂ 100%, bite block, closed suction, ขอความช่วยเหลือ",
+     "focus": "การค้นหาสาเหตุอย่างเป็นระบบก่อนสรุป"
+    },
+    {
+     "state": "State 2",
+     "status": "SpO₂ 92% FiO₂ 1.0, ABG: pH 7.28 / PaCO₂ 52 / PaO₂ 64",
+     "actions": "ABG ด้วย POCT, คำนวณ P/F = 64, ISBAR",
+     "focus": "การแปลผล blood gas และคุณภาพการรายงาน"
+    },
+    {
+     "state": "State 3",
+     "status": "PEEP 12, FiO₂ 0.7, SpO₂ 94%",
+     "actions": "Speak up เรื่อง N95, ทวนคำสั่ง, event note",
+     "focus": "การทักท้วงเพื่อความปลอดภัยและการบันทึก"
+    }
+   ],
+   "end_state": "ผู้ป่วยออกซิเจนดีขึ้น SpO₂ 94% ที่ FiO₂ 0.7 PEEP 12 รอ CXR และผล AFB ทีมบันทึก event note และวางแผนประเมินเสมหะ/ดูดเสมหะตามข้อบ่งชี้",
+   "key_teaching": "1) SpO₂ ลดในผู้ป่วยใช้เครื่องช่วยหายใจ ให้คิด DOPE ทุกครั้งก่อนสรุปสาเหตุ 2) ETCO₂ และขีดท่อคือหลักฐานว่าท่อยังอยู่ 3) ABG ต้องรายงานพร้อม FiO₂ และ P/F ratio 4) ความปลอดภัยของบุคลากรในห้องแยกโรคเป็นหน้าที่ของทุกคน รวมถึงการทักท้วง",
+   "roles": {
+    "confederates": {
+     "md_attending": "แพทย์เจ้าของไข้ (โทรศัพท์ แล้วเข้าห้องใน State 3)",
+     "md_attending_name": "",
+     "md_resident": "—",
+     "md_resident_name": "",
+     "charge_nurse": "พยาบาลเวรก่อน (ส่งเวร)",
+     "charge_nurse_name": "",
+     "rt": "—",
+     "rt_name": "",
+     "pharmacist": "—",
+     "pharmacist_name": "",
+     "anesthesia": "—",
+     "anesthesia_name": ""
+    },
+    "control_room": {
+     "director": "Simulation director",
+     "director_name": "",
+     "debriefer": "ผู้นำ debriefing (RN5–RN6/CNE)",
+     "debriefer_name": "",
+     "sim_tech": "Operator (RN3–RN4)",
+     "sim_tech_name": "",
+     "content_expert": "CNS / แพทย์ผู้เชี่ยวชาญ",
+     "content_expert_name": "",
+     "runner": "",
+     "runner_name": "",
+     "observer": "ผู้ประเมินตาม checklist",
+     "observer_name": ""
+    },
+    "participants": [
+     {
+      "state1": "RN1 พยาบาลเจ้าของไข้",
+      "state2": "RN2 พยาบาลคนที่สอง",
+      "state3": "RN3 หัวหน้าทีม",
+      "state4": "RN4 ผู้บันทึก/ผู้สังเกต"
+     }
+    ]
+   },
+   "debriefing": {
+    "model": "PEARLS",
+    "model_other": "",
+    "points": {
+     "state1": [
+      {
+       "topic": "ความปลอดภัยก่อนเข้าห้องแยกโรค",
+       "inquiry": "ผมสังเกตว่าทีมตรวจมาตรวัดความดันห้องก่อนสวม N95 ผมคิดว่าขั้นตอนนี้สำคัญมาก อะไรทำให้ทีมนึกถึงตรงนี้ครับ"
+      },
+      {
+       "topic": "N95 seal check",
+       "inquiry": "ผมเห็นว่าบางท่านสวม N95 แล้วเข้าห้องทันที ผมกังวลเรื่องการรั่วของหน้ากาก ตอนนั้นทีมคิดอย่างไรครับ"
+      },
+      {
+       "topic": "การตรวจอุปกรณ์เมื่อรับเวร",
+       "inquiry": "เมื่อได้ยินว่า “ห้องนี้ alarm ดังบ่อย” ทีมตีความอย่างไร และตรวจอะไรเป็นอย่างแรกครับ"
+      },
+      {
+       "topic": "ความรู้สึกตอน alarm ดัง",
+       "inquiry": "ตอนที่ High-pressure alarm ดังและ SpO₂ ลดลง ทีมรู้สึกอย่างไร และอะไรอยู่ในใจเป็นอย่างแรกครับ"
+      }
+     ],
+     "state2": [
+      {
+       "topic": "ลำดับการประเมินตาม DOPE",
+       "inquiry": "ผมสังเกตว่าทีมเพิ่ม O₂ ก่อนตรวจขีดท่อ ผมอยากเข้าใจวิธีคิดในการลำดับขั้นตอนตอนนั้น ทีมคิดอย่างไรครับ"
+      },
+      {
+       "topic": "การยืนยันว่าท่อไม่หลุด",
+       "inquiry": "อะไรทำให้ทีมมั่นใจว่าท่อช่วยหายใจไม่หลุด และถ้าไม่มี ETCO₂ ทีมจะยืนยันอย่างไรครับ"
+      },
+      {
+       "topic": "เทคนิค closed suction",
+       "inquiry": "ผมเห็นว่าการดูดเสมหะแต่ละครั้งใช้เวลาไม่เกิน 15 วินาทีและมี pre-oxygenation ทีมใช้อะไรเป็นหลักในการกำกับตัวเองครับ"
+      },
+      {
+       "topic": "การมอบหมายบทบาท",
+       "inquiry": "ผมสังเกตว่าช่วงแรกทุกคนเข้าไปที่เครื่องช่วยหายใจพร้อมกัน ผมกังวลเรื่องงานซ้ำซ้อน หัวหน้าทีมมองอย่างไรครับ"
+      }
+     ],
+     "state3": [
+      {
+       "topic": "การแปลผล ABG และ P/F ratio",
+       "inquiry": "ผล ABG ชุดนี้บอกอะไรกับทีมบ้าง และทำไม P/F ratio จึงสำคัญต่อการรายงานแพทย์ครับ"
+      },
+      {
+       "topic": "คุณภาพ ISBAR",
+       "inquiry": "ในการรายงาน ผมได้ยินผล ABG ครบแต่ยังไม่ชัดในส่วนข้อเสนอแนะ ทีมคิดว่าควรเสนออะไรกับแพทย์ครับ"
+      },
+      {
+       "topic": "Speak up เรื่อง N95",
+       "inquiry": "ผมเห็นว่ามีการทักแพทย์เรื่อง N95 ผมคิดว่าต้องใช้ความกล้ามาก อะไรทำให้กล้าหรือไม่กล้าพูดในจังหวะนั้นครับ"
+      },
+      {
+       "topic": "สิ่งที่จะนำไปใช้",
+       "inquiry": "ถ้าพรุ่งนี้เจอ SpO₂ ลดในผู้ป่วยใช้เครื่องช่วยหายใจ แต่ละท่านจะทำอะไรเป็น 1 สิ่งแรกทุกครั้ง เพราะอะไรครับ"
+      }
+     ]
+    }
+   },
+   "indicators": [
+    {
+     "indicator": "ตรวจความดันห้อง negative pressure และสวม PPE พร้อม N95 seal check ก่อนเข้าห้อง",
+     "criteria": "ผ่าน = ตรวจค่าความดันห้องและทำ seal check ก่อนเข้าห้องภายใน 2 นาที | ไม่ผ่าน = เข้าห้องโดยไม่ตรวจหรือไม่ทำ seal check",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "ระบุตัวผู้ป่วยและตรวจขีด ETT / alarm limit เมื่อรับเวร",
+     "criteria": "ผ่าน = ใช้ 2 ตัวบ่งชี้ และตรวจขีดท่อ 22 ซม. | ไม่ผ่าน = ขาดข้อใดข้อหนึ่ง",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "ค้นหาสาเหตุ SpO₂ ลดลงตามแนวทาง DOPE โดยตรวจขีด ETT และ ETCO₂",
+     "criteria": "ผ่าน = ตรวจขีดท่อและ ETCO₂ ภายใน 2 นาทีหลัง alarm ก่อนสรุปสาเหตุ | ไม่ผ่าน = สรุปสาเหตุโดยไม่ตรวจ หรือเกิน 2 นาที",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "ตอบสนอง High-pressure alarm และเพิ่ม O₂ 100% เมื่อ SpO₂ < 90%",
+     "criteria": "ผ่าน = เพิ่ม FiO₂ เป็น 1.0 ภายใน 1 นาที และไม่พัก alarm เกิน 3 นาที | ไม่ผ่าน = ปิดเสียง alarm ทิ้งหรือไม่เพิ่ม O₂",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "ดูดเสมหะด้วย closed suction พร้อม pre-oxygenation",
+     "criteria": "ผ่าน = ดูดภายใน 3 นาทีหลัง SpO₂ ลด ครั้งละไม่เกิน 15 วินาที | ไม่ผ่าน = เกิน 3 นาที หรือดูดนานเกิน 15 วินาที",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "แปลผล ABG จาก POCT และคำนวณ P/F ratio",
+     "criteria": "ผ่าน = ระบุ respiratory acidosis + hypoxemia และ P/F = 64 (คลาดเคลื่อนไม่เกิน 5) | ไม่ผ่าน = แปลผลผิดหรือไม่คำนวณ P/F",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "รายงานแพทย์ด้วย ISBAR โดยระบุผล ABG และ P/F ratio และทวนคำสั่งกลับ",
+     "criteria": "ผ่าน = ครบ 5 องค์ประกอบ มีผล ABG และทวนคำสั่ง | ไม่ผ่าน = ขาดองค์ประกอบใด หรือไม่มีผล ABG",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "ทักท้วงผู้ที่เข้าห้องโดยไม่สวม N95 (speak up) และบันทึก event note",
+     "criteria": "ผ่าน = ทักท้วงก่อนแพทย์ถึงเตียงและบันทึกเหตุการณ์ครบ | ไม่ผ่าน = ไม่ทักท้วง หรือไม่บันทึก",
+     "time": "",
+     "comments": ""
+    }
+   ],
+   "logistics": {
+    "equipment": [
+     "เตียงผู้ป่วยวิกฤต",
+     "เครื่องช่วยหายใจหรือ ventilator simulator",
+     "Monitor จำลอง (ECG, NIBP, SpO₂, ETCO₂)",
+     "Closed suction system และเครื่อง suction",
+     "BVM พร้อม HEPA filter",
+     "POCT blood gas analyzer (หรือใบผลจำลอง)",
+     "Infusion pump 2 เครื่อง",
+     "ป้ายมาตรวัดความดันห้อง negative pressure",
+     "โทรศัพท์"
+    ],
+    "supplies": [
+     "ETT No. 7.5 พร้อมพลาสเตอร์ยึด",
+     "Bite block",
+     "N95, gown, face shield, ถุงมือ",
+     "Syringe ABG",
+     "สาย suction และน้ำสำหรับล้างสาย",
+     "ใบคำสั่งแพทย์จำลอง",
+     "แบบบันทึก event note"
+    ],
+    "medications": [
+     "Fentanyl 25 mcg/ชม. IV infusion — ยาจำลอง",
+     "Propofol 1% IV infusion ตามคำสั่งแพทย์ (เป้าหมาย RASS −1 ถึง 0) — ยาจำลอง",
+     "0.9% NaCl 100 ml สำหรับ flush"
+    ],
+    "moulage_props": [
+     "เสมหะจำลองเหนียวสีเหลือง",
+     "ป้าย Airborne precaution หน้าห้อง",
+     "ป้ายข้อมือผู้ป่วย",
+     "แฟ้มเวชระเบียนจำลอง"
+    ],
+    "manikin": "หุ่น High-Fidelity ผู้ใหญ่ ใส่ ETT"
+   },
+   "references": {
+    "simulation": [
+     "INACSL Standards Committee. Healthcare Simulation Standards of Best Practice (2021).",
+     "Eppich W, Cheng A. Promoting Excellence and Reflective Learning in Simulation (PEARLS). Simul Healthc. 2015.",
+     "TeamSTEPPS 2.0 Pocket Guide, Agency for Healthcare Research and Quality."
+    ],
+    "clinical": [
+     "SOP พยาบาลวิชาชีพ Critical Care Unit (CCD) - Core (SOP-CCD-NSO-001 Rev.01) หัวข้อ 5.4 การดูแลระบบหายใจ/เครื่องช่วยหายใจ, 5.13 การป้องกันการติดเชื้อ, 5.3 การเฝ้าระวังและ alarm",
+     "S/P-02.1-BHQ-007 Clinical alarm management (ต้องยืนยันฉบับปัจจุบัน)",
+     "AARC Clinical Practice Guideline: Artificial Airway Suctioning (2022).",
+     "CDC. Guidelines for Preventing the Transmission of Mycobacterium tuberculosis in Health-Care Settings."
+    ]
+   },
+   "appendix": {
+    "cxr": "Bilateral lower lobe infiltration ETT ปลายอยู่เหนือ carina 3 ซม. — ภาพจำลอง",
+    "ekg": "Sinus tachycardia rate 110-120",
+    "lab": "ABG (FiO₂ 1.0): pH 7.28, PaCO₂ 52, PaO₂ 64, HCO₃ 24, SaO₂ 91% · P/F ratio 64 · AFB: รอผล",
+    "imaging": "—"
+   }
+  }
+ },
+ {
+  "id": "ccd-septic-shock",
+  "name": "SC-02 Septic shock ระยะแรกในหน่วยวิกฤต (Early septic shock)",
+  "setting": "Critical Care Unit (CCD)",
+  "tag": "ประเมินซ้ำ · จัดลำดับ · norepinephrine + IDC · central line · smart pump · I-PASS",
+  "data": {
+   "meta": {
+    "title": "การประเมินซ้ำ จัดลำดับความสำคัญ และความปลอดภัยด้านยาในผู้ป่วย septic shock ระยะแรก",
+    "patient_name": "มาลี ศรีสุข (Malee Srisuk)",
+    "course": "Core Critical Care Nursing Simulation Program — Critical Care Unit (CCD)",
+    "developed": "ฝ่ายวิชาการพยาบาล และ Clinical Nurse Educator โรงพยาบาลกรุงเทพ สำนักงานใหญ่",
+    "form_no": "",
+    "verified_date": "",
+    "approved": "",
+    "reviewed": ""
+   },
+   "time": {
+    "setup": 5,
+    "simulation": 15,
+    "debriefing": 25,
+    "total": 45
+   },
+   "classification": {
+    "discipline": "RNs",
+    "participant": "Team",
+    "level": "Advanced Beginner – Competent",
+    "fidelity": "High-Fidelity",
+    "scenario_type": "Progressive / Multi-State (4 states)"
+   },
+   "goals": {
+    "concept": "Medication Safety, Reassessment & Prioritisation, Early Warning Sign",
+    "practice": "Deliberate Practice, Systems-Based Practice",
+    "participant": "Team",
+    "evaluation": "Formative (RN ประจำปี) / Summative (พยาบาลใหม่ระยะ 3)"
+   },
+   "objectives": [
+    "สามารถระบุภาวะช็อกจาก MAP < 65 mmHg ร่วมกับอาการกำซาบเนื้อเยื่อไม่พอ ได้ภายใน 3 นาทีแรก",
+    "สามารถเก็บ hemoculture 2 ชุดก่อนให้ยาปฏิชีวนะ และเริ่มสารน้ำ 500 mL ใน 15 นาทีได้โดยไม่ล่าช้า",
+    "สามารถคำนวณ norepinephrine 0.05 mcg/kg/min และทำ IDC โดย RN 2 คน ก่อนเริ่มยาทาง CVC ด้วย smart pump ได้ถูกต้อง",
+    "สามารถประเมินซ้ำหลังการรักษาแต่ละขั้น และส่งเวรด้วย I-PASS ครบ 5 องค์ประกอบพร้อมแผน “ถ้า…ให้…” ได้"
+   ],
+   "demographics": {
+    "name": "มาลี ศรีสุข (Malee Srisuk)",
+    "hn": "69-0000102",
+    "age": "72 ปี",
+    "gender": "หญิง",
+    "weight": "55 kg",
+    "arrival": "ย้ายจากหอผู้ป่วยสามัญ 10 นาทีก่อน ด้วย UTI ไข้สูง ซึมลง",
+    "code_status": "Full code",
+    "diagnosis": "Urosepsis with septic shock",
+    "allergies": "ปฏิเสธการแพ้ยาและอาหาร",
+    "pmh": "Type 2 DM, Hypertension"
+   },
+   "prebriefing": "ทบทวนวัตถุประสงค์ของสถานการณ์ ย้ำ fiction contract, Basic Assumption และการรักษาความลับ แนะนำหุ่น อุปกรณ์ และสิ่งที่ทำได้/ทำไม่ได้กับหุ่น ยาทุกชนิดเป็นยาจำลอง ข้อมูลผู้ป่วยเป็นข้อมูลสมมติทั้งหมด จากนั้นอ่านข้อมูลส่งเวรให้ผู้เรียนฟัง: ผู้ป่วยหญิง 72 ปี น้ำหนัก 55 กก. ย้ายจากหอผู้ป่วยสามัญ 10 นาทีที่แล้วด้วย UTI ไข้สูง ซึมลง มี triple-lumen CVC ที่ right IJ CXR ยืนยันตำแหน่งแล้ว แพทย์เขียน “ใช้ได้” ไม่แพ้ยา คำสั่ง: Hemoculture × 2, lactate (POCT), Ceftriaxone 2 g IV, 0.9% NaCl 500 mL IV ใน 15 นาที ประเมินซ้ำได้ถึง 30 mL/kg, Norepinephrine 4 mg ใน D5W 250 mL เริ่ม 0.05 mcg/kg/min ปรับให้ MAP ≥ 65 mmHg",
+   "moulage": "ผิวเย็นลาย (mottling) ที่เข่าทั้งสองข้าง เหงื่อชื้น มี triple-lumen CVC ที่คอขวาปิด dressing ใส ถุงปัสสาวะสีเข้มปริมาณน้อย ติดป้ายข้อมือ",
+   "simulator": {
+    "manikin": "หุ่น High-Fidelity ผู้ใหญ่ มี triple-lumen CVC",
+    "initial_vs": "BP 86/48 (MAP 61), HR 118, RR 26, SpO₂ 93% O₂ cannula 3 LPM, Temp 39.0°C, CRT 4 วินาที",
+    "airway": "Patent",
+    "lung": "Clear ทั้งสองข้าง",
+    "heart": "Tachycardia regular",
+    "bowel": "Hypoactive",
+    "voice": "พูดสับสนเล็กน้อย ตอบช้า",
+    "iv": "Triple-lumen CVC right IJ (ยืนยันตำแหน่งแล้ว) และ peripheral IV เบอร์ 20 แขนซ้าย",
+    "monitor": "ECG, NIBP ทุก 5 นาที, SpO₂, Temp",
+    "special": "ปัสสาวะ 15 mL ในชั่วโมงที่ผ่านมา · smart pump จริงพร้อม drug library"
+   },
+   "states": [
+    {
+     "label": "BASELINE",
+     "condition": "แรกรับ: ผิวเย็นลาย สับสนเล็กน้อย CRT 4 วินาที ปัสสาวะ 15 mL/ชม. ลูกสาวยืนถามซ้ำ ๆ ข้างเตียง",
+     "vs": {
+      "time": "0-4",
+      "rhythm": "Sinus tachycardia",
+      "bp": "86/48 (MAP 61)",
+      "o2sat": "93% O₂ cannula 3 LPM",
+      "rr": "26",
+      "hr": "118",
+      "temp": "39.0°C",
+      "pain": "ปฏิเสธปวด",
+      "gcs": "E4V4M6 = 14",
+      "lung": "Clear",
+      "heart": "Tachycardia regular",
+      "bowel": "Hypoactive",
+      "mews": "8"
+     },
+     "vocalization": "“หนาว...เวียนหัว นี่ที่ไหนคะ”",
+     "confederate": "ลูกสาว: “แม่จะเป็นอะไรไหมคะ ทำไมต้องย้ายมาห้องนี้”",
+     "expected_actions": "ระบุภาวะช็อก (MAP < 65 + hypoperfusion) รายงานหัวหน้าเวร · เก็บ hemoculture 2 ชุด + lactate (POCT) · ให้ ceftriaxone 2 g หลังเก็บเชื้อทันที · เริ่ม 0.9% NaCl 500 mL ใน 15 นาที",
+     "operator_notes": "ถ้าผู้เรียนจะให้ยาปฏิชีวนะก่อนเก็บ hemoculture ให้ลูกสาวถามว่า “ต้องเจาะเลือดก่อนไหมคะ” เพียง 1 ครั้ง",
+     "transition": "เปลี่ยนเมื่อเริ่มให้สารน้ำ (แจ้งว่าเวลาผ่านไปจนได้สารน้ำ 1,000 mL) หรือเมื่อครบ 4 นาที"
+    },
+    {
+     "label": "STATE 1",
+     "condition": "หลังสารน้ำ 1,000 mL: ความดันยังต่ำ ยังซึม ปัสสาวะ 10 mL เสียงปอดใส Lactate 4.2 mmol/L",
+     "vs": {
+      "time": "4-8",
+      "rhythm": "Sinus tachycardia",
+      "bp": "88/50 (MAP 63)",
+      "o2sat": "94% O₂ cannula 3 LPM",
+      "rr": "24",
+      "hr": "112",
+      "temp": "38.8°C",
+      "pain": "ปฏิเสธปวด",
+      "gcs": "E4V4M6 = 14",
+      "lung": "Clear ไม่มี crepitation",
+      "heart": "Tachycardia regular",
+      "bowel": "Hypoactive",
+      "mews": "8"
+     },
+     "vocalization": "“เหนื่อย...ค่ะ”",
+     "confederate": "แพทย์ (ทางโทรศัพท์): “หลังให้น้ำแล้วเป็นอย่างไรบ้างครับ lactate เท่าไร”",
+     "expected_actions": "ประเมินซ้ำหลัง bolus (BP, CRT, เสียงปอด, ปัสสาวะ) · รายงานแพทย์ ISBAR · คำนวณ NE: 0.05 × 55 = 2.75 mcg/min = 165 mcg/ชม. ÷ 16 mcg/mL ≈ 10.3 mL/ชม. · IDC + co-sign โดย RN 2 คน · ตั้ง smart pump (drug library) ต่อช่องเฉพาะของ CVC scrub the hub ติดฉลากสาย",
+     "operator_notes": "ปรับ BP ตามอัตราที่ผู้เรียนตั้งจริง: ถ้าตั้งเกินขนาดให้ BP 160/96 ถ้าน้อยให้ MAP 58 เพื่อให้ IDC ค้นพบ facilitator อาจใช้ pause-and-discuss ถ้าไม่พบความผิดพลาด",
+     "transition": "เปลี่ยนเมื่อเริ่ม norepinephrine ถูกต้องหลัง IDC หรือเมื่อครบ 4 นาที"
+    },
+    {
+     "label": "STATE 2",
+     "condition": "ปรับ norepinephrine ถึง 0.1 mcg/kg/min (≈ 20.6 mL/ชม.) ความดันตอบสนอง ความรู้สึกตัวดีขึ้น ปัสสาวะ 25 mL/ชม.",
+     "vs": {
+      "time": "8-12",
+      "rhythm": "Sinus tachycardia",
+      "bp": "104/60 (MAP 75) on NE 0.1 mcg/kg/min",
+      "o2sat": "95% O₂ cannula 3 LPM",
+      "rr": "22",
+      "hr": "104",
+      "temp": "38.6°C",
+      "pain": "ปฏิเสธปวด",
+      "gcs": "E4V5M6 = 15",
+      "lung": "Clear",
+      "heart": "Tachycardia ลดลง",
+      "bowel": "Hypoactive",
+      "mews": "5"
+     },
+     "vocalization": "“ค่อยยังชั่วค่ะ ลูกสาวอยู่ไหนคะ”",
+     "confederate": "ลูกสาว (ร้องไห้): “ขอเข้าไปอยู่กับแม่ได้ไหมคะ แม่จะรอดไหม”",
+     "expected_actions": "วัด BP ทุก 5–15 นาทีขณะปรับยา บันทึกขนาดเป็น mcg/kg/min · วางแผนตรวจ lactate ซ้ำ · ตรวจตำแหน่งและ dressing ของ CVC · อธิบายอาการแก่ญาติในขอบเขตบทบาทพยาบาล ประสานแพทย์คุยกับญาติ · หัวหน้าเวรทบทวนการมอบหมายงาน",
+     "operator_notes": "ให้ลูกสาวถามซ้ำถ้าไม่มีใครตอบภายใน 1 นาที",
+     "transition": "เปลี่ยนเมื่อสื่อสารกับญาติและบันทึกขนาดยาแล้ว หรือเมื่อครบ 4 นาที"
+    },
+    {
+     "label": "STATE 3",
+     "condition": "อาการคงที่บน norepinephrine ถึงเวลาส่งเวรให้พยาบาลเวรถัดไป",
+     "vs": {
+      "time": "12-15",
+      "rhythm": "Sinus rhythm",
+      "bp": "108/62 (MAP 77) on NE 0.1 mcg/kg/min",
+      "o2sat": "96% O₂ cannula 3 LPM",
+      "rr": "20",
+      "hr": "100",
+      "temp": "38.4°C",
+      "pain": "ปฏิเสธปวด",
+      "gcs": "E4V5M6 = 15",
+      "lung": "Clear",
+      "heart": "Regular",
+      "bowel": "Hypoactive",
+      "mews": "1"
+     },
+     "vocalization": "“ขอบคุณค่ะ”",
+     "confederate": "พยาบาลเวรถัดไป: “ขอรับเวรด้วย I-PASS ค่ะ ตอนนี้คนไข้คงที่หรือยังคะ”",
+     "expected_actions": "ส่งเวรด้วย I-PASS: Illness severity ระบุ “ไม่คงที่/เฝ้าระวัง” · Patient summary · Action list (lactate ซ้ำ, BP ทุก 15 นาที) · Situation awareness & contingency “ถ้า MAP < 65 ให้…” · Synthesis by receiver ผู้รับเวรสรุปทวน",
+     "operator_notes": "ให้พยาบาลเวรถัดไปถามสิ่งที่มักตกหล่น: เวลาให้ยาปฏิชีวนะ ปริมาณสารน้ำรวม ช่องของ CVC ที่ใช้ให้ NE",
+     "transition": "จบสถานการณ์เมื่อผู้รับเวรสรุปทวนเสร็จ หรือเมื่อครบ 15 นาที"
+    }
+   ],
+   "run_summary": [
+    {
+     "state": "Baseline",
+     "status": "BP 86/48 (MAP 61), HR 118, T 39.0, CRT 4 วินาที",
+     "actions": "ระบุช็อก, hemoculture × 2, lactate, ceftriaxone, NSS 500 mL",
+     "focus": "การรับรู้ภาวะช็อกและการจัดลำดับ"
+    },
+    {
+     "state": "State 1",
+     "status": "MAP 63 หลังสารน้ำ 1,000 mL, lactate 4.2",
+     "actions": "ประเมินซ้ำ, ISBAR, คำนวณ NE ≈ 10.3 mL/ชม., IDC, CVC ช่องเฉพาะ",
+     "focus": "การประเมินซ้ำและความปลอดภัยของยา vasoactive"
+    },
+    {
+     "state": "State 2",
+     "status": "MAP 75 on NE 0.1 mcg/kg/min, ปัสสาวะ 25 mL/ชม.",
+     "actions": "BP ทุก 5–15 นาที, วางแผน lactate ซ้ำ, สื่อสารกับญาติ",
+     "focus": "การปรับยาและการดูแลญาติ"
+    },
+    {
+     "state": "State 3",
+     "status": "MAP 77 คงที่",
+     "actions": "ส่งเวร I-PASS พร้อมแผน “ถ้า…ให้…”",
+     "focus": "ความครบถ้วนของการส่งต่อข้อมูล"
+    }
+   ],
+   "end_state": "ผู้ป่วย MAP ≥ 65 mmHg บน norepinephrine 0.1 mcg/kg/min ปัสสาวะเพิ่มขึ้น ส่งเวรด้วย I-PASS พร้อมแผนตรวจ lactate ซ้ำและแผนรองรับเมื่อ MAP ลด",
+   "key_teaching": "1) ช็อก = MAP < 65 ร่วมกับ hypoperfusion ไม่ใช่ตัวเลขความดันอย่างเดียว 2) Hemoculture ก่อนยาปฏิชีวนะ แต่ยาต้องไม่ล่าช้า 3) ประเมินซ้ำทุกครั้งหลังการรักษาแต่ละขั้น 4) ยา vasoactive: คำนวณแยกกัน 2 คน (IDC), ให้ทาง CVC ช่องเฉพาะ, smart pump 5) I-PASS ต้องมีแผน “ถ้า…ให้…”",
+   "roles": {
+    "confederates": {
+     "md_attending": "แพทย์เจ้าของไข้ (ทางโทรศัพท์)",
+     "md_attending_name": "",
+     "md_resident": "—",
+     "md_resident_name": "",
+     "charge_nurse": "พยาบาลเวรถัดไป (รับเวร I-PASS) และลูกสาวผู้ป่วย (นักแสดง)",
+     "charge_nurse_name": "",
+     "rt": "—",
+     "rt_name": "",
+     "pharmacist": "—",
+     "pharmacist_name": "",
+     "anesthesia": "—",
+     "anesthesia_name": ""
+    },
+    "control_room": {
+     "director": "Simulation director",
+     "director_name": "",
+     "debriefer": "ผู้นำ debriefing (RN5–RN6/CNE)",
+     "debriefer_name": "",
+     "sim_tech": "Operator (RN3–RN4)",
+     "sim_tech_name": "",
+     "content_expert": "CNS / แพทย์ผู้เชี่ยวชาญ",
+     "content_expert_name": "",
+     "runner": "",
+     "runner_name": "",
+     "observer": "ผู้ประเมินตาม checklist",
+     "observer_name": ""
+    },
+    "participants": [
+     {
+      "state1": "RN1 พยาบาลเจ้าของไข้",
+      "state2": "RN2 พยาบาลคนที่สอง (IDC)",
+      "state3": "RN3 หัวหน้าเวร",
+      "state4": "RN4 ผู้บันทึก/ดูแลญาติ"
+     }
+    ]
+   },
+   "debriefing": {
+    "model": "PEARLS",
+    "model_other": "",
+    "points": {
+     "state1": [
+      {
+       "topic": "ความรู้สึกช่วงแรกรับ",
+       "inquiry": "ช่วงไหนของสถานการณ์ที่ทีมรู้สึกกดดันที่สุด และตอนนั้นอะไรอยู่ในใจครับ"
+      },
+      {
+       "topic": "การระบุภาวะช็อก",
+       "inquiry": "ผมสังเกตว่าทีมพูดถึง MAP ตั้งแต่นาทีแรก ผมคิดว่าสำคัญมาก ข้อมูลใดอีกบ้างที่ทำให้ทีมสรุปว่าเป็นช็อกครับ"
+      },
+      {
+       "topic": "ลำดับ hemoculture และยาปฏิชีวนะ",
+       "inquiry": "ทีมเริ่มยาปฏิชีวนะหลังเก็บ hemoculture ครบ 2 ชุด อะไรเป็นปัจจัยที่ทำให้ทำได้เร็วหรือช้าครับ"
+      },
+      {
+       "topic": "การจัดการญาติที่วิตกกังวล",
+       "inquiry": "ผมเห็นลูกสาวถามซ้ำหลายครั้งในช่วงแรก ผมกังวลเรื่องความไว้วางใจ ทีมมองสถานการณ์นั้นอย่างไรครับ"
+      }
+     ],
+     "state2": [
+      {
+       "topic": "การประเมินซ้ำหลังสารน้ำ",
+       "inquiry": "ข้อมูลใดบอกทีมว่าสารน้ำเพียงพอแล้วและถึงเวลาเริ่ม vasopressor ทีมใช้อะไรตัดสินใจครับ"
+      },
+      {
+       "topic": "การคำนวณ norepinephrine",
+       "inquiry": "ผมเห็นตัวเลข 10.3 mL/ชม. บนกระดาษของทั้งสองท่าน ทีมคิดอย่างไรในแต่ละขั้นของการคำนวณ ช่วยเล่าให้ฟังหน่อยครับ"
+      },
+      {
+       "topic": "ความเป็นอิสระของ IDC",
+       "inquiry": "ตอนทำ IDC ผมสังเกตว่าท่านที่สองดูตัวเลขของท่านแรกก่อนคำนวณ ผมกังวลเรื่องความเป็นอิสระ ทีมคิดอย่างไรครับ"
+      },
+      {
+       "topic": "การให้ยาทาง CVC",
+       "inquiry": "ทีมเลือกช่องของ CVC สำหรับ norepinephrine อย่างไร และทำไมการติดฉลากสายจึงสำคัญในมุมมองของทีมครับ"
+      }
+     ],
+     "state3": [
+      {
+       "topic": "การปรับยาและการติดตาม",
+       "inquiry": "เมื่อ MAP ขึ้นถึง 75 ทีมวางแผนติดตามต่ออย่างไร และอะไรจะทำให้ทีมปรับยาอีกครั้งครับ"
+      },
+      {
+       "topic": "บทบาทหัวหน้าเวร",
+       "inquiry": "หัวหน้าเวรจัดการกับญาติและภาระงานของทีมอย่างไร มีอะไรที่อยากทำต่างออกไปบ้างครับ"
+      },
+      {
+       "topic": "คุณภาพ I-PASS",
+       "inquiry": "ตอนส่งเวร ผมได้ยินแผน “ถ้า MAP < 65 ให้…” ชัดเจน ผมคิดว่าดีมาก ทีมคิดว่าส่วนใดของ I-PASS ยังเติมได้อีกครับ"
+      },
+      {
+       "topic": "สิ่งที่จะนำไปใช้",
+       "inquiry": "ถ้าสรุปหลักความปลอดภัยของยา vasoactive 3 ข้อจากวันนี้ แต่ละท่านจะเลือกข้อใด เพราะอะไรครับ"
+      }
+     ]
+    }
+   },
+   "indicators": [
+    {
+     "indicator": "ระบุภาวะช็อกจาก MAP < 65 mmHg ร่วมกับอาการกำซาบเนื้อเยื่อไม่พอ",
+     "criteria": "ผ่าน = ระบุ MAP < 65 และ hypoperfusion อย่างน้อย 2 ข้อ ภายใน 3 นาที | ไม่ผ่าน = ไม่ระบุหรือเกิน 3 นาที",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "เก็บ hemoculture 2 ชุดก่อนให้ยาปฏิชีวนะ และตรวจ lactate ด้วย POCT",
+     "criteria": "ผ่าน = เก็บครบ 2 ชุดก่อนให้ยาและรายงาน lactate | ไม่ผ่าน = ให้ยาก่อนเก็บเชื้อ หรือเก็บไม่ครบ 2 ชุด",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "ให้ยาปฏิชีวนะและเริ่มสารน้ำ 500 mL ใน 15 นาทีโดยไม่ล่าช้า",
+     "criteria": "ผ่าน = เริ่มยาปฏิชีวนะและสารน้ำภายใน 4 นาทีแรก | ไม่ผ่าน = เริ่มหลังนาทีที่ 4 หรือขนาดยาผิด",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "ประเมินซ้ำหลังสารน้ำแต่ละ bolus ก่อนเริ่มยากระตุ้นหลอดเลือด",
+     "criteria": "ผ่าน = ประเมิน BP, CRT, เสียงปอด และปัสสาวะครบ 4 ข้อ | ไม่ผ่าน = เริ่ม vasopressor โดยไม่ประเมินซ้ำ",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "คำนวณ norepinephrine 0.05 mcg/kg/min ถูกต้อง",
+     "criteria": "ผ่าน = ได้ 10.3 mL/ชม. (คลาดเคลื่อนไม่เกิน 0.2) | ไม่ผ่าน = คำนวณผิดหรือไม่แสดงวิธีคิด",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "ทำ IDC + co-sign โดย RN 2 คน ก่อนเริ่มยาทาง CVC ด้วย smart pump",
+     "criteria": "ผ่าน = RN 2 คนคำนวณแยกกัน ตรวจยา ความเข้มข้น และการตั้งเครื่อง ใช้ drug library ต่อ CVC ช่องเฉพาะ | ไม่ผ่าน = ขาดข้อใดข้อหนึ่ง",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "ติดตาม BP ขณะปรับยาและสื่อสารกับญาติ",
+     "criteria": "ผ่าน = วัด BP ทุก 5–15 นาที บันทึกขนาดเป็น mcg/kg/min และให้ข้อมูลญาติ | ไม่ผ่าน = ไม่บันทึกขนาดยาหรือไม่ตอบญาติ",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "ส่งเวรด้วย I-PASS ครบ 5 องค์ประกอบพร้อมแผน “ถ้า…ให้…”",
+     "criteria": "ผ่าน = ครบ 5 องค์ประกอบ มีแผนรองรับ และผู้รับเวรสรุปทวน | ไม่ผ่าน = ขาดองค์ประกอบใด หรือไม่มีการสรุปทวน",
+     "time": "",
+     "comments": ""
+    }
+   ],
+   "logistics": {
+    "equipment": [
+     "เตียงผู้ป่วยวิกฤต",
+     "Monitor จำลอง (ECG, NIBP, SpO₂, Temp)",
+     "Smart pump พร้อม drug library 2 เครื่อง",
+     "POCT lactate (หรือใบผลจำลอง)",
+     "อุปกรณ์ให้ออกซิเจน (cannula, mask with bag)",
+     "โทรศัพท์",
+     "เครื่องคิดเลข"
+    ],
+    "supplies": [
+     "ชุดเจาะ hemoculture 2 ชุด",
+     "IV tubing สำหรับ smart pump",
+     "Syringe และ needleless connector",
+     "แอลกอฮอล์สำหรับ scrub the hub",
+     "ฉลากติดสายและถุงยา",
+     "ใบคำสั่งแพทย์จำลอง",
+     "แบบฟอร์ม I-PASS",
+     "ถุงมือ S/M/L"
+    ],
+    "medications": [
+     "Norepinephrine 4 mg in D5W 250 ml (16 mcg/ml) — ยาจำลอง",
+     "Ceftriaxone 2 g IV — ยาจำลอง",
+     "0.9% NaCl 500 ml x 4 ถุง"
+    ],
+    "moulage_props": [
+     "ผิวลาย (mottling) ที่เข่า",
+     "เหงื่อจำลอง",
+     "ถุงปัสสาวะสีเข้มปริมาณน้อย",
+     "CVC dressing ใส",
+     "ป้ายข้อมือผู้ป่วย"
+    ],
+    "manikin": "หุ่น High-Fidelity ผู้ใหญ่ มี triple-lumen CVC"
+   },
+   "references": {
+    "simulation": [
+     "INACSL Standards Committee. Healthcare Simulation Standards of Best Practice (2021).",
+     "Eppich W, Cheng A. Promoting Excellence and Reflective Learning in Simulation (PEARLS). Simul Healthc. 2015.",
+     "TeamSTEPPS 2.0 Pocket Guide, Agency for Healthcare Research and Quality."
+    ],
+    "clinical": [
+     "Surviving Sepsis Campaign: International Guidelines for Management of Sepsis and Septic Shock 2021.",
+     "SOP พยาบาลวิชาชีพ Critical Care Unit (CCD) - Core (SOP-CCD-NSO-001 Rev.01) หัวข้อ 5.5 การดูแลระบบไหลเวียน/BSI bundle, 5.6 การบริหารยาและ high-alert drugs, 5.7 การเก็บสิ่งส่งตรวจ/POCT",
+     "S/P-02.1-BHQ-005 High-alert medication / Independent double check (ต้องยืนยันฉบับปัจจุบัน)",
+     "Starmer AJ, et al. I-PASS handoff bundle. N Engl J Med. 2014."
+    ]
+   },
+   "appendix": {
+    "cxr": "CVC tip อยู่ที่ cavoatrial junction ไม่มี pneumothorax ปอดใส — ภาพจำลอง",
+    "ekg": "Sinus tachycardia rate 110-120",
+    "lab": "Lactate 4.2 mmol/L (POCT), WBC 19,400 /µL, Creatinine 1.8 mg/dL, UA: WBC มาก Nitrite positive",
+    "imaging": "—"
+   }
+  }
+ },
+ {
+  "id": "ccd-hyperk-vf",
+  "name": "SC-03 Hyperkalaemia จากไตวาย → VF (Hyperkalaemia progressing to VF)",
+  "setting": "Critical Care Unit (CCD)",
+  "tag": "ค่าวิกฤต read-back · ECG · calcium · CPR คุณภาพสูง · first shock ≤ 2 นาที",
+  "data": {
+   "meta": {
+    "title": "การรับรู้ภาวะทรุดลงจากโพแทสเซียมสูงและการตอบสนองของทีมเมื่อเกิด Ventricular fibrillation",
+    "patient_name": "ประเสริฐ ทองดี (Prasert Thongdee)",
+    "course": "Core Critical Care Nursing Simulation Program — Critical Care Unit (CCD)",
+    "developed": "ฝ่ายวิชาการพยาบาล และ Clinical Nurse Educator โรงพยาบาลกรุงเทพ สำนักงานใหญ่",
+    "form_no": "",
+    "verified_date": "",
+    "approved": "",
+    "reviewed": ""
+   },
+   "time": {
+    "setup": 5,
+    "simulation": 15,
+    "debriefing": 25,
+    "total": 45
+   },
+   "classification": {
+    "discipline": "RNs",
+    "participant": "Team",
+    "level": "Competent",
+    "fidelity": "High-Fidelity",
+    "scenario_type": "Progressive / Multi-State (4 states)"
+   },
+   "goals": {
+    "concept": "Deterioration & Team Response, Critical Value Reporting, Resuscitation",
+    "practice": "Deliberate Practice, Systems-Based Practice",
+    "participant": "Team",
+    "evaluation": "Formative (RN ประจำปี) / Summative (พยาบาลใหม่ระยะ 3)"
+   },
+   "objectives": [
+    "สามารถรับค่าวิกฤต K 7.2 mmol/L ด้วย read-back และระบุการเปลี่ยนแปลง ECG ที่สัมพันธ์กันได้ภายใน 3 นาที",
+    "สามารถเตรียมและให้ยารักษาภาวะโพแทสเซียมสูงตามคำสั่ง โดยทำ IDC insulin ด้วย RN 2 คนได้อย่างปลอดภัย",
+    "สามารถเริ่ม CPR ภายใน 10 วินาที และช็อกไฟฟ้าครั้งแรกได้ภายใน 2 นาทีหลังเกิด VF",
+    "สามารถทำงานตามบทบาทด้วย closed-loop communication และดูแลหลัง ROSC ครบ 3 ข้อ (ABC, ECG 12 lead, POCT) ได้"
+   ],
+   "demographics": {
+    "name": "ประเสริฐ ทองดี (Prasert Thongdee)",
+    "hn": "69-0000103",
+    "age": "66 ปี",
+    "gender": "ชาย",
+    "weight": "70 kg",
+    "arrival": "รับไว้ CCD เมื่อวานด้วย AKI on CKD จากการติดเชื้อ",
+    "code_status": "Full code",
+    "diagnosis": "AKI on CKD stage 4 with hyperkalaemia",
+    "allergies": "ปฏิเสธการแพ้ยาและอาหาร",
+    "pmh": "CKD stage 4, Hypertension, Type 2 DM ยังไม่เคยฟอกเลือด"
+   },
+   "prebriefing": "ทบทวนวัตถุประสงค์ของสถานการณ์ ย้ำ fiction contract, Basic Assumption และการรักษาความลับ แนะนำหุ่น อุปกรณ์ และสิ่งที่ทำได้/ทำไม่ได้กับหุ่น ยาทุกชนิดเป็นยาจำลอง ข้อมูลผู้ป่วยเป็นข้อมูลสมมติทั้งหมด จากนั้นอ่านข้อมูลส่งเวรให้ผู้เรียนฟัง: ผู้ป่วยชาย 66 ปี น้ำหนัก 70 กก. CKD stage 4 มี AKI ซ้ำเติมจากการติดเชื้อ รับไว้เมื่อวาน ยังไม่ได้ฟอกเลือด บ่นอ่อนเพลีย ปัสสาวะ 10–15 mL/ชม. ใน 4 ชม.ที่ผ่านมา ได้ 5% D/N/2 40 mL/ชม. มี peripheral IV 2 เส้น สถานการณ์เริ่มเมื่อห้องปฏิบัติการโทรแจ้งค่าวิกฤต",
+   "moulage": "ผิวซีด บวมกดบุ๋มที่ขา 2+ ถุงปัสสาวะปริมาณน้อย ติด ECG 3 lead ไว้ก่อน ยังไม่ติด defib pads ติดป้ายข้อมือผู้ป่วย",
+   "simulator": {
+    "manikin": "หุ่น High-Fidelity ผู้ใหญ่ที่ช็อกไฟฟ้าได้",
+    "initial_vs": "BP 110/64, HR 58, RR 22, SpO₂ 95% room air, Temp 37.2°C",
+    "airway": "Patent",
+    "lung": "Fine crepitation ที่ชายปอดทั้งสองข้าง",
+    "heart": "Bradycardia regular",
+    "bowel": "Normoactive",
+    "voice": "พูดได้ เสียงอ่อนแรง",
+    "iv": "Peripheral IV เบอร์ 20 สองเส้น (แขนซ้ายและขวา)",
+    "monitor": "ECG: sinus bradycardia, peaked T, QRS 0.14 วินาที · NIBP · SpO₂ · ETCO₂ (ใช้ช่วง CPR)",
+    "special": "ตั้งให้เปลี่ยนเป็น VF ได้ทันที และ ROSC หลังช็อกครั้งที่ 2 + calcium · defibrillator จริง (โหมดฝึก) · ใช้ RCDP ช่วงหัวใจหยุดเต้นได้"
+   },
+   "states": [
+    {
+     "label": "BASELINE",
+     "condition": "ห้องปฏิบัติการโทรแจ้งค่าวิกฤต K 7.2 mmol/L ผู้ป่วยอ่อนแรงขาสองข้าง ECG: T สูงแหลม QRS กว้าง 0.14 วินาที",
+     "vs": {
+      "time": "0-4",
+      "rhythm": "Sinus bradycardia, peaked T, QRS กว้าง",
+      "bp": "110/64 (MAP 79)",
+      "o2sat": "95% RA",
+      "rr": "22",
+      "hr": "58",
+      "temp": "37.2°C",
+      "pain": "ปฏิเสธปวด",
+      "gcs": "E4V5M6 = 15",
+      "lung": "Fine crepitation ชายปอด",
+      "heart": "Bradycardia regular",
+      "bowel": "Normoactive",
+      "mews": "2"
+     },
+     "vocalization": "“ขาไม่มีแรงเลยครับ ใจหวิว ๆ”",
+     "confederate": "เจ้าหน้าที่ห้องปฏิบัติการ (โทรศัพท์): “แจ้งค่าวิกฤต โพแทสเซียม 7.2 ค่ะ ขอทวนค่าด้วยค่ะ”",
+     "expected_actions": "รับค่าวิกฤตพร้อม read-back บันทึกเวลาและชื่อผู้แจ้ง · ทำ ECG 12 lead · ติด monitor/defib pads ไว้ก่อน · รายงานแพทย์ ISBAR รับคำสั่ง 10% calcium gluconate, RI 10 units + 50% glucose 50 mL, salbutamol พ่น · IDC insulin โดย RN 2 คน",
+     "operator_notes": "ส่งภาพ ECG 12 lead เมื่อผู้เรียนทำ ECG ให้แพทย์สั่งการรักษาทางโทรศัพท์เมื่อได้รับรายงาน",
+     "transition": "เปลี่ยนเป็น VF เมื่อเริ่มให้ calcium หรือเมื่อครบ 4 นาที (ถ้ายังไม่ให้ยา ก็เกิด VF เช่นกัน)"
+    },
+    {
+     "label": "STATE 1",
+     "condition": "ผู้ป่วยหมดสติทันที monitor แสดง ventricular fibrillation คลำชีพจรไม่ได้ ไม่หายใจ",
+     "vs": {
+      "time": "4-7",
+      "rhythm": "Ventricular fibrillation",
+      "bp": "วัดไม่ได้",
+      "o2sat": "วัดไม่ได้",
+      "rr": "ไม่หายใจ",
+      "hr": "ไม่มีชีพจร",
+      "temp": "37.2°C",
+      "pain": "ประเมินไม่ได้",
+      "gcs": "E1V1M1 = 3",
+      "lung": "ไม่มีเสียงหายใจ",
+      "heart": "ไม่มีเสียงหัวใจ",
+      "bowel": "—",
+      "mews": "—"
+     },
+     "vocalization": "ไม่มีเสียง",
+     "confederate": "ผู้ช่วยพยาบาล: “พี่คะ คนไข้ไม่ตอบแล้วค่ะ”",
+     "expected_actions": "ตรวจการตอบสนองและชีพจรภายใน 10 วินาที · เรียก Code 8 · เริ่มกดหน้าอก อัตรา 100–120 ครั้ง/นาที ลึก 5–6 ซม. · ช็อกไฟฟ้าครั้งแรกภายใน 2 นาที (พลังงานตามเครื่อง) เคลียร์ทุกคนก่อนช็อก แล้วกดต่อทันที · หัวหน้าทีมแบ่งบทบาท ผู้บันทึกจับเวลา",
+     "operator_notes": "จับเวลาตั้งแต่เกิด VF ถึงช็อกครั้งแรก ถ้าใช้ RCDP ให้หยุดและฝึกซ้ำเฉพาะจุดเมื่อช็อกเกิน 2 นาทีหรือหยุดกดเกิน 10 วินาที",
+     "transition": "เปลี่ยนเมื่อช็อกครั้งแรกและกดหน้าอกต่อครบ 2 นาที หรือเมื่อครบ 3 นาที"
+    },
+    {
+     "label": "STATE 2",
+     "condition": "ยังเป็น VF หลังช็อกครั้งแรก ทีม Code 8 มาถึง ทำ CPR ต่อเนื่อง",
+     "vs": {
+      "time": "7-11",
+      "rhythm": "Ventricular fibrillation",
+      "bp": "วัดไม่ได้",
+      "o2sat": "วัดไม่ได้",
+      "rr": "ช่วยหายใจด้วย BVM",
+      "hr": "ไม่มีชีพจร",
+      "temp": "37.2°C",
+      "pain": "ประเมินไม่ได้",
+      "gcs": "E1V1M1 = 3",
+      "lung": "ได้ยินเสียงลมเข้าเท่ากันขณะบีบ BVM",
+      "heart": "ไม่มีเสียงหัวใจ",
+      "bowel": "—",
+      "mews": "—"
+     },
+     "vocalization": "ไม่มีเสียง",
+     "confederate": "แพทย์ทีม Code 8: “สรุปให้ฟังหน่อยครับ เกิดอะไรขึ้น ให้อะไรไปแล้วบ้าง”",
+     "expected_actions": "ตรวจจังหวะทุก 2 นาที ช็อกครั้งที่ 2 · เปลี่ยนผู้กดทุก 2 นาที หยุดกดไม่เกิน 10 วินาที · epinephrine 1 mg IV หลังช็อกครั้งที่ 2 · ค้นหา H’s & T’s ระบุ hyperkalaemia ให้ 10% calcium gluconate ตามคำสั่ง · closed-loop communication ทุกคำสั่ง",
+     "operator_notes": "ETCO₂ ขณะ CPR 14–18 mmHg ถ้ากดไม่ลึกพอให้ลดเป็น 8 ถ้าทีมไม่พูดถึงสาเหตุ ให้แพทย์ถามว่า “คิดว่าสาเหตุคืออะไร”",
+     "transition": "เปลี่ยนเป็น ROSC เมื่อช็อกครั้งที่ 2 + ให้ calcium + CPR คุณภาพดี หรือเมื่อครบ 4 นาที"
+    },
+    {
+     "label": "STATE 3",
+     "condition": "ROSC: คลำชีพจรได้ ยังไม่รู้สึกตัว ช่วยหายใจด้วย BVM ETCO₂ 38 mmHg",
+     "vs": {
+      "time": "11-15",
+      "rhythm": "Sinus rhythm",
+      "bp": "96/58 (MAP 71)",
+      "o2sat": "94% BVM O₂ 100%",
+      "rr": "10 (ช่วยหายใจ)",
+      "hr": "92",
+      "temp": "37.0°C",
+      "pain": "ประเมินไม่ได้",
+      "gcs": "E1V1M4 = 6",
+      "lung": "เสียงลมเข้าเท่ากัน",
+      "heart": "Regular",
+      "bowel": "—",
+      "mews": "4"
+     },
+     "vocalization": "ไม่มีเสียง ขยับแขนเมื่อกระตุ้น",
+     "confederate": "แพทย์: “เตรียมฟอกเลือดฉุกเฉินนะครับ ใครจะแจ้งญาติ”",
+     "expected_actions": "ประเมิน ABC · ECG 12 lead · POCT K และ glucose (หลังได้ insulin) · ประสานเตรียมฟอกเลือดฉุกเฉินตามคำสั่ง · บันทึก code record ครบถ้วน · แจ้งญาติ · hot debrief สั้นของทีม",
+     "operator_notes": "ผล POCT: K 6.4 mmol/L, glucose 142 mg/dL ส่งเมื่อผู้เรียนตรวจ",
+     "transition": "จบสถานการณ์เมื่อบันทึก code record และ hot debrief เสร็จ หรือเมื่อครบ 15 นาที"
+    }
+   ],
+   "run_summary": [
+    {
+     "state": "Baseline",
+     "status": "K 7.2, HR 58, peaked T, QRS 0.14 วินาที",
+     "actions": "Read-back, ECG 12 lead, ติด pads, ISBAR, IDC insulin, calcium",
+     "focus": "การรายงานค่าวิกฤตและการเตรียมพร้อมก่อนทรุด"
+    },
+    {
+     "state": "State 1",
+     "status": "VF ไม่มีชีพจร",
+     "actions": "CPR ภายใน 10 วินาที, Code 8, ช็อกครั้งแรกภายใน 2 นาที",
+     "focus": "ความเร็วของ chest compression และ first shock"
+    },
+    {
+     "state": "State 2",
+     "status": "VF ต่อเนื่อง ETCO₂ 14–18",
+     "actions": "ช็อกครั้งที่ 2, epinephrine 1 mg, calcium, H’s & T’s",
+     "focus": "บทบาททีมและสาเหตุที่แก้ไขได้"
+    },
+    {
+     "state": "State 3",
+     "status": "ROSC: HR 92, BP 96/58, ETCO₂ 38",
+     "actions": "ABC, ECG 12 lead, POCT K/glucose, code record, แจ้งญาติ",
+     "focus": "การดูแลหลัง ROSC และการบันทึก"
+    }
+   ],
+   "end_state": "ผู้ป่วย ROSC ภายใน 7 นาทีหลังเกิด VF ยังไม่รู้สึกตัว ช่วยหายใจต่อเนื่อง เตรียมใส่ท่อช่วยหายใจและฟอกเลือดฉุกเฉินตามคำสั่ง ทีมบันทึก code record ครบ",
+   "key_teaching": "1) ค่าวิกฤตต้อง read-back และลงมือทันที ECG บอกความเร่งด่วนได้ก่อนผลเลือดซ้ำ 2) ติด defib pads ไว้ก่อนในผู้ป่วยเสี่ยง 3) First shock ≤ 2 นาที และหยุดกดไม่เกิน 10 วินาที 4) Hyperkalaemia เป็นสาเหตุที่แก้ไขได้ calcium ต้องมาก่อน 5) หลังให้ insulin ต้องติดตาม glucose",
+   "roles": {
+    "confederates": {
+     "md_attending": "แพทย์ทีม Code 8",
+     "md_attending_name": "",
+     "md_resident": "—",
+     "md_resident_name": "",
+     "charge_nurse": "เจ้าหน้าที่ห้องปฏิบัติการ (โทรศัพท์) และผู้ช่วยพยาบาล",
+     "charge_nurse_name": "",
+     "rt": "—",
+     "rt_name": "",
+     "pharmacist": "—",
+     "pharmacist_name": "",
+     "anesthesia": "—",
+     "anesthesia_name": ""
+    },
+    "control_room": {
+     "director": "Simulation director",
+     "director_name": "",
+     "debriefer": "ผู้นำ debriefing (RN5–RN6/CNE)",
+     "debriefer_name": "",
+     "sim_tech": "Operator (RN3–RN4)",
+     "sim_tech_name": "",
+     "content_expert": "CNS / แพทย์ผู้เชี่ยวชาญ",
+     "content_expert_name": "",
+     "runner": "",
+     "runner_name": "",
+     "observer": "ผู้ประเมินตาม checklist",
+     "observer_name": ""
+    },
+    "participants": [
+     {
+      "state1": "RN1 พยาบาลเจ้าของไข้",
+      "state2": "RN2 พยาบาลคนที่สอง (ยา/IDC)",
+      "state3": "RN3 หัวหน้าทีม (Team leader)",
+      "state4": "RN4 ผู้บันทึกและจับเวลา"
+     }
+    ]
+   },
+   "debriefing": {
+    "model": "PEARLS",
+    "model_other": "",
+    "points": {
+     "state1": [
+      {
+       "topic": "ความรู้สึกเมื่อเห็น VF",
+       "inquiry": "ตอนที่เห็น VF บนจอ ทีมรู้สึกอย่างไร และสิ่งแรกที่นึกถึงคืออะไรครับ"
+      },
+      {
+       "topic": "การรับค่าวิกฤตด้วย read-back",
+       "inquiry": "ผมได้ยินการทวนค่า K 7.2 กลับไปยังห้องปฏิบัติการ ผมคิดว่าสำคัญมาก ทีมทำอะไรต่อจากนั้นเป็นอย่างแรก เพราะอะไรครับ"
+      },
+      {
+       "topic": "การอ่าน ECG",
+       "inquiry": "ECG ตอนแรกบอกอะไรกับทีมบ้าง และมีผลต่อความเร่งด่วนในการรายงานแพทย์อย่างไรครับ"
+      },
+      {
+       "topic": "การติด pads ไว้ก่อน",
+       "inquiry": "ผมสังเกตว่าทีมติด defib pads ก่อนที่หัวใจจะหยุดเต้น ผมอยากรู้ว่าตอนตัดสินใจทีมคิดอย่างไรครับ"
+      }
+     ],
+     "state2": [
+      {
+       "topic": "เวลาถึง first shock",
+       "inquiry": "ผู้บันทึกช่วยอ่าน timeline ให้ฟังหน่อยครับ ช็อกครั้งแรกเกิดที่นาทีที่เท่าไร และอะไรทำให้เร็วหรือช้า"
+      },
+      {
+       "topic": "คุณภาพ CPR",
+       "inquiry": "ผมเห็นช่วงที่หยุดกดหน้าอกนานกว่า 10 วินาทีตอนเปลี่ยนคน ผมกังวลเรื่อง perfusion ทีมมองว่าจะลดช่วงนี้ได้อย่างไรครับ"
+      },
+      {
+       "topic": "บทบาทและ closed-loop communication",
+       "inquiry": "การสื่อสารของ team leader ช่วงไหนชัดเจน ช่วงไหนสับสน สมาชิกทีมมองอย่างไรครับ"
+      },
+      {
+       "topic": "สาเหตุที่แก้ไขได้",
+       "inquiry": "อะไรทำให้ทีมนึกถึง hyperkalaemia เป็นสาเหตุ และทำไม calcium จึงต้องให้ก่อนยาอื่นครับ"
+      }
+     ],
+     "state3": [
+      {
+       "topic": "ความปลอดภัยของ insulin",
+       "inquiry": "ตอนทำ IDC insulin ทั้งสองท่านตรวจอะไรกันบ้าง และวางแผนติดตาม glucose อย่างไรครับ"
+      },
+      {
+       "topic": "การดูแลหลัง ROSC",
+       "inquiry": "เมื่อได้ ROSC ทีมจัดลำดับสิ่งที่ต้องทำอย่างไร มีอะไรที่เกือบตกหล่นบ้างครับ"
+      },
+      {
+       "topic": "การบันทึกและแจ้งญาติ",
+       "inquiry": "ผมเห็นว่า code record มีเวลาช็อกและเวลาให้ยาครบ ทีมแบ่งงานบันทึกและการแจ้งญาติกันอย่างไรครับ"
+      },
+      {
+       "topic": "สิ่งที่จะนำไปใช้",
+       "inquiry": "ถ้าเกิด Code จริงในเวรถัดไป 1 สิ่งที่ทีมจะทำต่างออกไปจากวันนี้คืออะไร เพราะอะไรครับ"
+      }
+     ]
+    }
+   },
+   "indicators": [
+    {
+     "indicator": "รับค่าวิกฤต K 7.2 mmol/L ด้วย read-back และบันทึกเวลา",
+     "criteria": "ผ่าน = ทวนค่ากลับ บันทึกเวลาและชื่อผู้แจ้ง ภายใน 1 นาที | ไม่ผ่าน = ไม่ทวนค่าหรือไม่บันทึก",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "ทำ ECG 12 lead และระบุการเปลี่ยนแปลง ECG ที่สัมพันธ์กับโพแทสเซียมสูง",
+     "criteria": "ผ่าน = ระบุ peaked T และ QRS กว้าง ภายใน 3 นาที | ไม่ผ่าน = ไม่ทำ ECG หรือระบุไม่ได้",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "รายงานแพทย์ด้วย ISBAR และให้ยารักษาภาวะโพแทสเซียมสูงตามคำสั่ง",
+     "criteria": "ผ่าน = รายงานครบ 5 องค์ประกอบ ทวนคำสั่ง และเริ่ม calcium ภายใน 4 นาที | ไม่ผ่าน = ขาดองค์ประกอบหรือไม่ทวนคำสั่ง",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "ทำ IDC insulin โดย RN 2 คน และวางแผนตรวจ glucose ซ้ำ",
+     "criteria": "ผ่าน = RN 2 คนตรวจชนิดยา ขนาด 10 units และ co-sign ก่อนให้ | ไม่ผ่าน = ให้โดยไม่มี IDC",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "เริ่ม CPR ภายใน 10 วินาทีหลังพบหัวใจหยุดเต้น",
+     "criteria": "ผ่าน = เริ่มกดหน้าอกภายใน 10 วินาที อัตรา 100–120 ครั้ง/นาที ลึก 5–6 ซม. | ไม่ผ่าน = เกิน 10 วินาที หรือคุณภาพไม่ถึงเกณฑ์",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "ช็อกไฟฟ้าครั้งแรกภายใน 2 นาทีหลังเกิด VF",
+     "criteria": "ผ่าน = ช็อกภายใน 2 นาที เคลียร์ทุกคนก่อนช็อก และกดต่อทันที | ไม่ผ่าน = เกิน 2 นาที หรือหยุดกดเกิน 10 วินาที",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "ทำงานตามบทบาทด้วย closed-loop communication และให้ epinephrine ถูกขนาดและเวลา",
+     "criteria": "ผ่าน = แบ่งบทบาทครบ ทวนคำสั่งทุกครั้ง ให้ epinephrine 1 mg หลังช็อกครั้งที่ 2 | ไม่ผ่าน = ไม่มีหัวหน้าทีมชัดเจน หรือให้ยาผิดเวลา",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "ดูแลหลัง ROSC ครบ 3 ข้อ (ABC, ECG 12 lead, POCT) และบันทึก code record",
+     "criteria": "ผ่าน = ทำครบ 3 ข้อและบันทึกเวลาช็อก/ให้ยาครบ | ไม่ผ่าน = ขาดข้อใดข้อหนึ่ง",
+     "time": "",
+     "comments": ""
+    }
+   ],
+   "logistics": {
+    "equipment": [
+     "เตียงผู้ป่วยวิกฤตพร้อม CPR board",
+     "Defibrillator (โหมดฝึก) พร้อม pads",
+     "Monitor จำลอง (ECG, NIBP, SpO₂, ETCO₂)",
+     "รถ Emergency จำลอง",
+     "เครื่อง ECG 12 lead",
+     "BVM พร้อม reservoir",
+     "อุปกรณ์ใส่ท่อช่วยหายใจ",
+     "POCT (K, glucose) หรือใบผลจำลอง",
+     "นาฬิกาจับเวลา",
+     "โทรศัพท์"
+    ],
+    "supplies": [
+     "Syringe และ needle หลายขนาด",
+     "IV tubing",
+     "ภาพผล ECG 12 lead (peaked T, QRS กว้าง)",
+     "ใบแจ้งค่าวิกฤต",
+     "แบบบันทึกการช่วยฟื้นคืนชีพ (Code record)",
+     "ถุงมือ S/M/L"
+    ],
+    "medications": [
+     "10% Calcium gluconate 10 ml IV ตามคำสั่งแพทย์ — ยาจำลอง",
+     "Regular insulin 10 units IV + 50% glucose 50 ml — ยาจำลอง",
+     "Salbutamol 10 mg พ่นฝอยละออง — ยาจำลอง",
+     "Epinephrine 1 mg IV ทุก 3–5 นาที — ยาจำลอง",
+     "0.9% NaCl 100 ml สำหรับ flush"
+    ],
+    "moulage_props": [
+     "ขาบวมกดบุ๋ม",
+     "ถุงปัสสาวะปริมาณน้อย",
+     "ป้ายข้อมือผู้ป่วย",
+     "แฟ้มเวชระเบียนจำลอง"
+    ],
+    "manikin": "หุ่น High-Fidelity ผู้ใหญ่ที่ช็อกไฟฟ้าได้"
+   },
+   "references": {
+    "simulation": [
+     "INACSL Standards Committee. Healthcare Simulation Standards of Best Practice (2021).",
+     "Eppich W, Cheng A. Promoting Excellence and Reflective Learning in Simulation (PEARLS). Simul Healthc. 2015.",
+     "TeamSTEPPS 2.0 Pocket Guide, Agency for Healthcare Research and Quality."
+    ],
+    "clinical": [
+     "American Heart Association. Guidelines for Cardiopulmonary Resuscitation and Emergency Cardiovascular Care (ฉบับปัจจุบัน).",
+     "SOP พยาบาลวิชาชีพ Critical Care Unit (CCD) - Core (SOP-CCD-NSO-001 Rev.01) หัวข้อ 5.8 ภาวะอิเล็กโทรไลต์ผิดปกติ, 5.12 การช่วยฟื้นคืนชีพ, 5.3 การเฝ้าระวัง, 5.7 ค่าวิกฤต",
+     "S/P-02.1-BHQ-003 Critical test results reporting และ S/P-02.1-BHQ-005 High-alert medication (ต้องยืนยันฉบับปัจจุบัน)",
+     "KDIGO. Acute hyperkalemia management: conclusions from a Controversies Conference. Kidney Int. 2020."
+    ]
+   },
+   "appendix": {
+    "cxr": "—",
+    "ekg": "ก่อนหยุดเต้น: sinus bradycardia 58, peaked T, QRS 0.14 วินาที · ระหว่างเหตุการณ์: VF · หลัง ROSC: sinus rhythm 92",
+    "lab": "K 7.2 mmol/L (ค่าวิกฤต), Creatinine 5.8 mg/dL, HCO₃ 15 mmol/L · หลัง ROSC (POCT): K 6.4 mmol/L, glucose 142 mg/dL",
+    "imaging": "—"
+   }
+  }
+ },
+ {
+  "id": "ccd-dka-insulin",
+  "name": "SC-04 DKA ระหว่างหยด insulin: K ต่ำและน้ำตาลลดเร็ว (DKA during insulin infusion)",
+  "setting": "Critical Care Unit (CCD)",
+  "tag": "anion gap · K ก่อน insulin · KCl ผ่าน pump + IDC · POCT glucose · hypoglycaemia",
+  "data": {
+   "meta": {
+    "title": "การเฝ้าระวังและป้องกันอันตรายจากการรักษาในผู้ป่วย DKA ระหว่างหยด insulin",
+    "patient_name": "ณัฐธิดา แก้วใส (Nattida Kaewsai)",
+    "course": "Core Critical Care Nursing Simulation Program — Critical Care Unit (CCD)",
+    "developed": "ฝ่ายวิชาการพยาบาล และ Clinical Nurse Educator โรงพยาบาลกรุงเทพ สำนักงานใหญ่",
+    "form_no": "",
+    "verified_date": "",
+    "approved": "",
+    "reviewed": ""
+   },
+   "time": {
+    "setup": 5,
+    "simulation": 15,
+    "debriefing": 25,
+    "total": 45
+   },
+   "classification": {
+    "discipline": "RNs",
+    "participant": "Team",
+    "level": "Advanced Beginner – Competent",
+    "fidelity": "High-Fidelity",
+    "scenario_type": "Progressive / Multi-State (4 states)"
+   },
+   "goals": {
+    "concept": "Medication Safety, Monitoring & Prevention of Treatment-related Harm",
+    "practice": "Deliberate Practice, Systems-Based Practice",
+    "participant": "Team",
+    "evaluation": "Formative (RN ประจำปี) / Summative (พยาบาลใหม่ระยะ 3)"
+   },
+   "objectives": [
+    "สามารถแปลผล blood gas และคำนวณ anion gap = 16 ในผู้ป่วย DKA ได้ถูกต้องภายใน 3 นาที",
+    "สามารถรายงานแพทย์ทันทีเมื่อโพแทสเซียม < 3.5 mmol/L และขอคำสั่งเพิ่ม dextrose เมื่อ glucose < 250 mg/dL",
+    "สามารถให้ KCl 20 mmol ทางหลอดเลือดดำอย่างปลอดภัยด้วย infusion pump และ IDC โดย RN 2 คนได้",
+    "สามารถแก้ไขภาวะน้ำตาลต่ำระหว่างหยด insulin และตรวจ POCT glucose ซ้ำภายใน 15 นาทีได้"
+   ],
+   "demographics": {
+    "name": "ณัฐธิดา แก้วใส (Nattida Kaewsai)",
+    "hn": "69-0000104",
+    "age": "24 ปี",
+    "gender": "หญิง",
+    "weight": "50 kg",
+    "arrival": "รับไว้ CCD 2 ชม. ก่อนด้วย DKA",
+    "code_status": "Full code",
+    "diagnosis": "Diabetic ketoacidosis (Type 1 DM)",
+    "allergies": "ปฏิเสธการแพ้ยาและอาหาร",
+    "pmh": "Type 1 DM 8 ปี ขาดยา insulin 2 วันก่อนมาโรงพยาบาล"
+   },
+   "prebriefing": "ทบทวนวัตถุประสงค์ของสถานการณ์ ย้ำ fiction contract, Basic Assumption และการรักษาความลับ แนะนำหุ่น อุปกรณ์ และสิ่งที่ทำได้/ทำไม่ได้กับหุ่น ยาทุกชนิดเป็นยาจำลอง ข้อมูลผู้ป่วยเป็นข้อมูลสมมติทั้งหมด จากนั้นอ่านข้อมูลส่งเวรให้ผู้เรียนฟัง: ผู้ป่วยหญิง 24 ปี น้ำหนัก 50 กก. เบาหวานชนิดที่ 1 รับไว้ 2 ชม. ก่อนด้วย DKA (แรกรับ glucose 485 mg/dL, pH 7.10, HCO₃ 8, Na 134, Cl 100) ได้ RI 100 units ใน NSS 100 mL หยด 5 mL/ชม. (0.1 unit/kg/ชม.) ทาง peripheral IV, NSS 250 mL/ชม. มี CVC subclavian ใช้ได้แล้ว คำสั่งเดิม: POCT glucose ทุก 1 ชม. อิเล็กโทรไลต์ทุก 2 ชม. — ผลชุดใหม่เพิ่งออก",
+   "moulage": "ริมฝีปากแห้ง หายใจลึก ถุงยา RI และ NSS ติดฉลากชัดเจนต่อ smart pump มี CVC subclavian ขวาปิด dressing ใส ติดป้ายข้อมือผู้ป่วย",
+   "simulator": {
+    "manikin": "หุ่น High-Fidelity ผู้ใหญ่ หรือ standardized patient",
+    "initial_vs": "BP 104/62, HR 112, RR 26 หายใจลึก, SpO₂ 98% room air, Temp 37.4°C",
+    "airway": "Patent",
+    "lung": "Clear หายใจลึกแบบ Kussmaul",
+    "heart": "Tachycardia regular",
+    "bowel": "Hypoactive",
+    "voice": "พูดได้ผ่านลำโพง ง่วงเล็กน้อย",
+    "iv": "Peripheral IV แขนซ้าย (RI infusion + NSS) และ CVC subclavian ขวา (ใช้ได้แล้ว)",
+    "monitor": "ECG: sinus tachycardia, T แบน มี U wave · NIBP · SpO₂",
+    "special": "POCT glucose แสดงผลตามแต่ละ state · smart pump 2 เครื่อง"
+   },
+   "states": [
+    {
+     "label": "BASELINE",
+     "condition": "ผลชุดใหม่ออก: POCT glucose 238 mg/dL, K 3.1 mmol/L, Na 136, Cl 106, HCO₃ 14 ผู้ป่วยคลื่นไส้ ปวดเมื่อยตัว ECG มี U wave",
+     "vs": {
+      "time": "0-4",
+      "rhythm": "Sinus tachycardia, T แบน มี U wave",
+      "bp": "104/62 (MAP 76)",
+      "o2sat": "98% RA",
+      "rr": "26",
+      "hr": "112",
+      "temp": "37.4°C",
+      "pain": "3/10 ปวดเมื่อยตัว",
+      "gcs": "E4V5M6 = 15",
+      "lung": "Clear หายใจลึก",
+      "heart": "Tachycardia regular",
+      "bowel": "Hypoactive",
+      "mews": "4"
+     },
+     "vocalization": "“คลื่นไส้ค่ะ เมื่อยไปทั้งตัวเลย”",
+     "confederate": "เจ้าหน้าที่ห้องปฏิบัติการ: ส่งใบผลอิเล็กโทรไลต์ชุดใหม่",
+     "expected_actions": "ทบทวนผลแล็บทันที · ระบุ K < 3.5 → รายงานแพทย์ทันที (พิจารณาลด/หยุด insulin ตามคำสั่ง) · ระบุ glucose < 250 → ขอคำสั่งเพิ่ม dextrose · คำนวณ anion gap = 136 − (106 + 14) = 16 · ดู ECG",
+     "operator_notes": "วางใบผลแล็บไว้ที่เคาน์เตอร์ ไม่บอกผู้เรียนว่าผลผิดปกติ ถ้าไม่มีใครดูผลใน 2 นาที ให้ผู้ป่วยบ่นว่าใจสั่น",
+     "transition": "เปลี่ยนเมื่อรายงานแพทย์ด้วย ISBAR หรือเมื่อครบ 4 นาที"
+    },
+    {
+     "label": "STATE 1",
+     "condition": "แพทย์สั่ง: KCl 20 mmol ใน NSS 100 mL ทาง CVC ใน 2 ชม. (50 mL/ชม.), เปลี่ยน NSS เป็น 5% D/N/2, ลด RI เป็น 2.5 units/ชม.",
+     "vs": {
+      "time": "4-8",
+      "rhythm": "Sinus tachycardia มี U wave",
+      "bp": "106/64 (MAP 78)",
+      "o2sat": "98% RA",
+      "rr": "24",
+      "hr": "108",
+      "temp": "37.4°C",
+      "pain": "3/10",
+      "gcs": "E4V5M6 = 15",
+      "lung": "Clear",
+      "heart": "Tachycardia regular",
+      "bowel": "Hypoactive",
+      "mews": "3"
+     },
+     "vocalization": "“ทำไมต้องให้น้ำเกลือที่มีน้ำตาลคะ หนูเป็นเบาหวานนะ”",
+     "confederate": "แพทย์ (ทางโทรศัพท์): “ขอทวนคำสั่งด้วยครับ KCl ห้าม push นะครับ”",
+     "expected_actions": "ทวนคำสั่งกลับ · IDC โดย RN 2 คนทั้ง KCl และการเปลี่ยนอัตรา insulin ก่อนตั้ง pump · ใช้ KCl พร้อมใช้จากห้องยา ให้ผ่าน infusion pump ทาง CVC 50 mL/ชม. (10 mmol/ชม.) ห้าม IV push · ติด monitor ต่อเนื่อง · อธิบายเหตุผลการให้ dextrose ด้วยภาษาง่าย",
+     "operator_notes": "ถ้าผู้เรียนตั้งอัตรา KCl เกิน 50 mL/ชม. ให้ smart pump แจ้งเตือน (hard limit) ถ้าจะ push ให้ facilitator หยุดสถานการณ์ทันที",
+     "transition": "เปลี่ยนเมื่อเริ่ม KCl ผ่าน pump หลัง IDC หรือเมื่อครบ 4 นาที (แจ้งผู้เรียนว่าเวลาผ่านไป 1 ชม. ผู้ป่วยอาเจียน 2 ครั้ง)"
+    },
+    {
+     "label": "STATE 2",
+     "condition": "1 ชม. ต่อมา: เหงื่อออก ตัวสั่น สับสน ตอบช้า POCT glucose 58 mg/dL มี PVCs บน monitor",
+     "vs": {
+      "time": "8-12",
+      "rhythm": "Sinus tachycardia with PVCs",
+      "bp": "110/70 (MAP 83)",
+      "o2sat": "98% RA",
+      "rr": "24",
+      "hr": "124",
+      "temp": "37.2°C",
+      "pain": "ประเมินไม่ได้ชัด",
+      "gcs": "E4V4M6 = 14",
+      "lung": "Clear",
+      "heart": "Tachycardia มี PVCs",
+      "bowel": "Hypoactive",
+      "mews": "5"
+     },
+     "vocalization": "“หนู...ใจสั่น มือสั่นไปหมด นี่กี่โมงแล้วคะ”",
+     "confederate": "พยาบาลคนที่สอง: “คนไข้เหงื่อแตกเลยค่ะ จะให้ทำอะไรก่อนดีคะ”",
+     "expected_actions": "ระบุอาการน้ำตาลต่ำ ตรวจ POCT glucose ทันที · ให้ 50% glucose ทางหลอดเลือดดำตามคำสั่ง/W/P · หยุด insulin ชั่วคราวตามคำสั่ง · รายงานแพทย์ ISBAR (glucose ต่ำ + K ต่ำ + PVCs) · ตรวจ POCT glucose ซ้ำภายใน 15 นาที",
+     "operator_notes": "State นี้เป็นเหตุการณ์ที่กำหนดไว้ล่วงหน้าเพื่อฝึกการแก้ไขภาวะน้ำตาลต่ำ ไม่ขึ้นกับการปฏิบัติใน State 1 หลังให้ 50% glucose ให้แจ้งว่าเวลาผ่านไป 15 นาที",
+     "transition": "เปลี่ยนเมื่อให้ 50% glucose และตรวจ POCT ซ้ำ หรือเมื่อครบ 4 นาที"
+    },
+    {
+     "label": "STATE 3",
+     "condition": "ตรวจซ้ำ 15 นาที: POCT glucose 142 mg/dL ผลโพแทสเซียมซ้ำ 3.6 mmol/L ผู้ป่วยรู้ตัวดี PVCs หายไป",
+     "vs": {
+      "time": "12-15",
+      "rhythm": "Sinus tachycardia",
+      "bp": "108/66 (MAP 80)",
+      "o2sat": "98% RA",
+      "rr": "22",
+      "hr": "100",
+      "temp": "37.2°C",
+      "pain": "2/10",
+      "gcs": "E4V5M6 = 15",
+      "lung": "Clear",
+      "heart": "Regular",
+      "bowel": "Hypoactive",
+      "mews": "2"
+     },
+     "vocalization": "“ดีขึ้นแล้วค่ะ เมื่อกี้ตกใจมากเลย”",
+     "confederate": "แพทย์: “เมื่อไรเราจะเปลี่ยนเป็น insulin ฉีดใต้ผิวหนังได้ครับ ต้องดูอะไรบ้าง”",
+     "expected_actions": "ตอบเกณฑ์การเปลี่ยนเป็น insulin ใต้ผิวหนัง: รอ ketoacidosis หาย (anion gap ปกติ) และให้ basal insulin ก่อนหยุดหยด 1–2 ชม. · รับคำสั่งเริ่ม insulin ต่อในอัตราใหม่พร้อม dextrose · บันทึกเหตุการณ์และส่งเวร",
+     "operator_notes": "ให้แพทย์ถามต่อว่า “anion gap ตอนนี้เท่าไร” ถ้าผู้เรียนยังไม่เคยคำนวณ",
+     "transition": "จบสถานการณ์เมื่อบันทึกและสรุปแผนเสร็จ หรือเมื่อครบ 15 นาที"
+    }
+   ],
+   "run_summary": [
+    {
+     "state": "Baseline",
+     "status": "Glucose 238, K 3.1, HCO₃ 14, AG 16, U wave",
+     "actions": "ทบทวนผลแล็บ, คำนวณ anion gap, รายงาน K < 3.5 และ glucose < 250",
+     "focus": "การเฝ้าระวังผลแล็บระหว่างหยด insulin"
+    },
+    {
+     "state": "State 1",
+     "status": "คำสั่งใหม่: KCl 20 mmol/2 ชม., D5N/2, RI 2.5 units/ชม.",
+     "actions": "ทวนคำสั่ง, IDC, KCl ผ่าน pump ทาง CVC, อธิบายผู้ป่วย",
+     "focus": "ความปลอดภัยของ KCl และ insulin"
+    },
+    {
+     "state": "State 2",
+     "status": "Glucose 58, HR 124 มี PVCs, สับสน",
+     "actions": "50% glucose, หยุด insulin ชั่วคราว, ISBAR, POCT ซ้ำใน 15 นาที",
+     "focus": "การแก้ไขอันตรายจากการรักษา"
+    },
+    {
+     "state": "State 3",
+     "status": "Glucose 142, K 3.6",
+     "actions": "ตอบเกณฑ์เปลี่ยนเป็น SC insulin, บันทึก, ส่งเวร",
+     "focus": "จุดสิ้นสุดของการรักษา DKA"
+    }
+   ],
+   "end_state": "ผู้ป่วยรู้ตัวดี glucose 142 mg/dL, K 3.6 mmol/L ได้ KCl ต่อเนื่องผ่าน pump เริ่ม insulin ต่อในอัตราใหม่พร้อม dextrose และติดตาม POCT glucose ทุก 1 ชม.",
+   "key_teaching": "1) K ก่อน insulin: K < 3.5 mmol/L ต้องรายงานทันที 2) Glucose < 250 mg/dL เพิ่ม dextrose โดยไม่หยุดรักษา ketoacidosis 3) KCl ให้ผ่าน pump เท่านั้น ห้าม push และต้อง IDC 4) น้ำตาลลดเร็วคือสัญญาณเตือน ไม่ใช่ข่าวดีเสมอไป 5) จุดสิ้นสุดของ DKA คือ anion gap ปกติ ไม่ใช่ระดับน้ำตาล",
+   "roles": {
+    "confederates": {
+     "md_attending": "แพทย์เจ้าของไข้ (ทางโทรศัพท์)",
+     "md_attending_name": "",
+     "md_resident": "—",
+     "md_resident_name": "",
+     "charge_nurse": "ผู้ป่วย (พูดผ่านลำโพง/standardized patient)",
+     "charge_nurse_name": "",
+     "rt": "—",
+     "rt_name": "",
+     "pharmacist": "—",
+     "pharmacist_name": "",
+     "anesthesia": "—",
+     "anesthesia_name": ""
+    },
+    "control_room": {
+     "director": "Simulation director",
+     "director_name": "",
+     "debriefer": "ผู้นำ debriefing (RN5–RN6/CNE)",
+     "debriefer_name": "",
+     "sim_tech": "Operator (RN3–RN4)",
+     "sim_tech_name": "",
+     "content_expert": "CNS / แพทย์ผู้เชี่ยวชาญ",
+     "content_expert_name": "",
+     "runner": "",
+     "runner_name": "",
+     "observer": "ผู้ประเมินตาม checklist",
+     "observer_name": ""
+    },
+    "participants": [
+     {
+      "state1": "RN1 พยาบาลเจ้าของไข้",
+      "state2": "RN2 พยาบาลคนที่สอง (IDC)",
+      "state3": "RN3 หัวหน้าเวร",
+      "state4": "RN4 ผู้บันทึก/ผู้สังเกต"
+     }
+    ]
+   },
+   "debriefing": {
+    "model": "PEARLS",
+    "model_other": "",
+    "points": {
+     "state1": [
+      {
+       "topic": "ความคิดแรกเมื่อเห็นผลแล็บ",
+       "inquiry": "เมื่อเห็นผลแล็บชุดนี้ สิ่งแรกที่ทีมคิดคืออะไร และตัวเลขใดที่ดึงความสนใจมากที่สุดครับ"
+      },
+      {
+       "topic": "น้ำตาลลดเร็ว: ข่าวดีหรือสัญญาณเตือน",
+       "inquiry": "ระดับน้ำตาลลดจาก 485 เหลือ 238 ใน 2 ชม. ทีมมองว่าเป็นข่าวดีหรือสัญญาณเตือน เพราะอะไรครับ"
+      },
+      {
+       "topic": "การคำนวณ anion gap",
+       "inquiry": "ผมเห็นว่าทีมคำนวณ anion gap ได้ 16 ทีมคิดอย่างไรจึงได้ตัวเลขนี้ และตัวเลขนี้มีความหมายอะไรต่อการรักษาครับ"
+      },
+      {
+       "topic": "K ก่อน insulin",
+       "inquiry": "ทำไม insulin จึงทำให้ K ต่ำลง และทีมคิดว่าอะไรคืออันตรายถ้าให้ insulin ต่อโดยไม่แก้ไขครับ"
+      }
+     ],
+     "state2": [
+      {
+       "topic": "ความปลอดภัยของ KCl",
+       "inquiry": "ผมสังเกตว่าทีมขอ KCl พร้อมใช้จากห้องยาและให้ผ่าน pump ผมคิดว่าสำคัญมาก ทีมใช้หลักอะไรกำกับตัวเองครับ"
+      },
+      {
+       "topic": "IDC ก่อนเปลี่ยนอัตรา insulin",
+       "inquiry": "ตอนเปลี่ยนอัตรา insulin ผมเห็นว่ามีการตั้งเครื่องก่อนที่ท่านที่สองจะมาตรวจ ผมกังวลเรื่องความคลาดเคลื่อน ทีมคิดอย่างไรครับ"
+      },
+      {
+       "topic": "การอธิบายผู้ป่วย",
+       "inquiry": "เมื่อผู้ป่วยถามว่าทำไมต้องให้น้ำเกลือที่มีน้ำตาล ทีมเลือกอธิบายอย่างไร และคิดว่าผู้ป่วยเข้าใจแค่ไหนครับ"
+      },
+      {
+       "topic": "การทวนคำสั่งทางโทรศัพท์",
+       "inquiry": "คำสั่งทางโทรศัพท์ครั้งนี้มีหลายรายการ ทีมทำอย่างไรให้มั่นใจว่ารับคำสั่งถูกต้องครบถ้วนครับ"
+      }
+     ],
+     "state3": [
+      {
+       "topic": "การรับรู้ภาวะน้ำตาลต่ำ",
+       "inquiry": "อาการใดทำให้ทีมนึกถึงน้ำตาลต่ำเป็นอย่างแรก และตอนนั้นทีมจัดลำดับการทำอย่างไรครับ"
+      },
+      {
+       "topic": "การตรวจซ้ำภายใน 15 นาที",
+       "inquiry": "ผมเห็นว่าทีมตั้งเวลาตรวจ POCT glucose ซ้ำ ผมคิดว่าดีมาก อะไรช่วยให้ไม่ลืมขั้นตอนนี้ครับ"
+      },
+      {
+       "topic": "จุดสิ้นสุดของการรักษา DKA",
+       "inquiry": "ทำไมต้องให้ dextrose โดยไม่หยุดรักษาด้วย insulin และทีมคิดว่าจุดจบของการรักษา DKA คืออะไรครับ"
+      },
+      {
+       "topic": "สิ่งที่จะนำไปใช้",
+       "inquiry": "ถ้าสรุปจุดปลอดภัย 3 ข้อของ DKA protocol จากวันนี้ แต่ละท่านจะจำข้อใดเป็นพิเศษ เพราะอะไรครับ"
+      }
+     ]
+    }
+   },
+   "indicators": [
+    {
+     "indicator": "ทบทวนผลแล็บชุดใหม่และคำนวณ anion gap ในผู้ป่วย DKA",
+     "criteria": "ผ่าน = คำนวณ anion gap = 16 ถูกต้องภายใน 3 นาที | ไม่ผ่าน = ไม่คำนวณหรือคำนวณผิด",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "รายงานแพทย์ทันทีเมื่อโพแทสเซียม < 3.5 mmol/L ด้วย ISBAR",
+     "criteria": "ผ่าน = รายงาน K 3.1 ภายใน 4 นาทีก่อนให้ insulin ต่อตามเดิม | ไม่ผ่าน = ไม่รายงานหรือเกิน 4 นาที",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "ขอคำสั่งเพิ่ม dextrose เมื่อ glucose < 250 mg/dL",
+     "criteria": "ผ่าน = ระบุ glucose 238 และขอคำสั่ง dextrose ในการรายงานครั้งเดียวกัน | ไม่ผ่าน = ไม่ขอคำสั่ง",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "ทำ IDC โดย RN 2 คนก่อนให้ KCl และก่อนเปลี่ยนอัตรา insulin",
+     "criteria": "ผ่าน = RN 2 คนตรวจยา ความเข้มข้น อัตรา และ co-sign ทั้ง 2 รายการ | ไม่ผ่าน = ขาด IDC รายการใดรายการหนึ่ง",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "ให้ KCl 20 mmol ทางหลอดเลือดดำด้วย infusion pump อย่างปลอดภัย",
+     "criteria": "ผ่าน = ให้ทาง CVC ผ่าน pump 50 mL/ชม. (10 mmol/ชม.) พร้อม monitor ไม่ push | ไม่ผ่าน = push หรือตั้งอัตราเกิน 10 mmol/ชม.",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "แก้ไขภาวะน้ำตาลต่ำระหว่างหยด insulin",
+     "criteria": "ผ่าน = ให้ 50% glucose ตามคำสั่งภายใน 3 นาทีหลังพบ glucose 58 และหยุด insulin ชั่วคราว | ไม่ผ่าน = เกิน 3 นาที หรือไม่หยุด insulin",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "ตรวจ POCT glucose ซ้ำภายใน 15 นาทีหลังแก้ไข และบันทึก",
+     "criteria": "ผ่าน = ตรวจซ้ำภายใน 15 นาทีและบันทึกผล | ไม่ผ่าน = ไม่ตรวจซ้ำหรือไม่บันทึก",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "อธิบายเหตุผลการรักษาแก่ผู้ป่วย และเกณฑ์เปลี่ยนเป็น insulin ใต้ผิวหนัง",
+     "criteria": "ผ่าน = อธิบายด้วยภาษาง่าย และตอบเกณฑ์ได้ 2 ข้อ (anion gap ปกติ, basal insulin ก่อนหยุดหยด 1–2 ชม.) | ไม่ผ่าน = ตอบได้น้อยกว่า 2 ข้อ",
+     "time": "",
+     "comments": ""
+    }
+   ],
+   "logistics": {
+    "equipment": [
+     "เตียงผู้ป่วยวิกฤต",
+     "Monitor จำลอง (ECG, NIBP, SpO₂)",
+     "Smart pump / infusion pump 2 เครื่อง",
+     "POCT glucose (ผลจำลอง)",
+     "โทรศัพท์",
+     "เครื่องคิดเลข"
+    ],
+    "supplies": [
+     "IV tubing สำหรับ pump",
+     "ฉลากติดสายและถุงยา",
+     "ใบผลแล็บ 2 ชุด",
+     "ECG strip มี U wave",
+     "ใบคำสั่งแพทย์จำลอง",
+     "Syringe หลายขนาด",
+     "ถุงมือ S/M/L"
+    ],
+    "medications": [
+     "Regular insulin 100 units in NSS 100 ml (1 unit/ml) — ยาจำลอง",
+     "KCl 20 mmol in NSS 100 ml (พร้อมใช้จากห้องยา) — ยาจำลอง",
+     "50% glucose 50 ml IV ตามคำสั่งแพทย์ — ยาจำลอง",
+     "5% D/N/2 1,000 ml",
+     "0.9% NaCl 1,000 ml"
+    ],
+    "moulage_props": [
+     "เหงื่อจำลอง (State 2)",
+     "ริมฝีปากแห้ง",
+     "CVC dressing ใส",
+     "ป้ายข้อมือผู้ป่วย"
+    ],
+    "manikin": "หุ่น High-Fidelity ผู้ใหญ่ หรือ standardized patient"
+   },
+   "references": {
+    "simulation": [
+     "INACSL Standards Committee. Healthcare Simulation Standards of Best Practice (2021).",
+     "Eppich W, Cheng A. Promoting Excellence and Reflective Learning in Simulation (PEARLS). Simul Healthc. 2015.",
+     "TeamSTEPPS 2.0 Pocket Guide, Agency for Healthcare Research and Quality."
+    ],
+    "clinical": [
+     "American Diabetes Association. Hyperglycemic Crises in Adults With Diabetes: A Consensus Report. Diabetes Care. 2024.",
+     "SOP พยาบาลวิชาชีพ Critical Care Unit (CCD) - Core (SOP-CCD-NSO-001 Rev.01) หัวข้อ 5.8 ภาวะอิเล็กโทรไลต์ผิดปกติ, 5.6 การบริหารยาและ high-alert drugs, 5.7 POCT",
+     "S/P-02.1-BHQ-005 High-alert medication และ S/P-02.1-BHQ-006 Concentrated electrolytes (ต้องยืนยันฉบับปัจจุบัน)",
+     "Joint British Diabetes Societies. The Management of Diabetic Ketoacidosis in Adults (2023)."
+    ]
+   },
+   "appendix": {
+    "cxr": "—",
+    "ekg": "Sinus tachycardia, T wave แบน, มี U wave · State 2: PVCs เป็นครั้งคราว",
+    "lab": "แรกรับ: glucose 485, pH 7.10, HCO₃ 8, Na 134, Cl 100 · 2 ชม.: glucose 238, K 3.1, Na 136, Cl 106, HCO₃ 14 (AG 16) · State 2: glucose 58 · State 3: glucose 142, K 3.6",
+    "imaging": "—"
+   }
+  }
+ },
+ {
+  "id": "ccd-fall-neuro",
+  "name": "SC-05 พลัดตก ได้ warfarin → GCS ลดลง (Fall with neurological deterioration)",
+  "setting": "Critical Care Unit (CCD)",
+  "tag": "GCS · รูม่านตา · Cushing’s triad · ISBAR · เคลื่อนย้ายไป CT · รายงานอุบัติการณ์",
+  "data": {
+   "meta": {
+    "title": "การประเมินทางระบบประสาทและการรายงานเร่งด่วนในผู้ป่วยพลัดตกที่ได้รับยาต้านการแข็งตัวของเลือด",
+    "patient_name": "บุญเรือน สายทอง (Boonruean Saithong)",
+    "course": "Core Critical Care Nursing Simulation Program — Critical Care Unit (CCD)",
+    "developed": "ฝ่ายวิชาการพยาบาล และ Clinical Nurse Educator โรงพยาบาลกรุงเทพ สำนักงานใหญ่",
+    "form_no": "",
+    "verified_date": "",
+    "approved": "",
+    "reviewed": ""
+   },
+   "time": {
+    "setup": 5,
+    "simulation": 15,
+    "debriefing": 25,
+    "total": 45
+   },
+   "classification": {
+    "discipline": "RNs",
+    "participant": "Team",
+    "level": "Advanced Beginner – Competent",
+    "fidelity": "High-Fidelity",
+    "scenario_type": "Progressive / Multi-State (4 states)"
+   },
+   "goals": {
+    "concept": "Neurological Assessment & Escalation, Patient Safety, Risk Management",
+    "practice": "Deliberate Practice, Systems-Based Practice",
+    "participant": "Team",
+    "evaluation": "Formative (RN ประจำปี) / Summative (พยาบาลใหม่ระยะ 3)"
+   },
+   "objectives": [
+    "สามารถประเมิน GCS และรูม่านตาได้ถูกต้อง (คลาดเคลื่อนไม่เกิน 1 คะแนน) ในทุก state",
+    "สามารถรายงานแพทย์ด้วย ISBAR ทันทีเมื่อ GCS ลด ≥ 2 คะแนน หรือรูม่านตาไม่เท่ากัน พร้อมข้อมูล warfarin และ INR 3.8",
+    "สามารถระบุ Cushing’s triad ครบ 3 ข้อ ป้องกันทางเดินหายใจ และเตรียมเคลื่อนย้ายไป CT อย่างปลอดภัยได้",
+    "สามารถจัดการหลังเหตุพลัดตก โดยรายงานอุบัติการณ์และแจ้งญาติได้ภายในเวรที่เกิดเหตุ (ภายใน 15 นาทีของสถานการณ์)"
+   ],
+   "demographics": {
+    "name": "บุญเรือน สายทอง (Boonruean Saithong)",
+    "hn": "69-0000105",
+    "age": "74 ปี",
+    "gender": "หญิง",
+    "weight": "60 kg",
+    "arrival": "รับไว้ CCD ด้วย pneumonia + AF วันที่ 3",
+    "code_status": "Full code",
+    "diagnosis": "Pneumonia, Atrial fibrillation on warfarin — พลัดตกเวลา 03.00 น.",
+    "allergies": "ปฏิเสธการแพ้ยาและอาหาร",
+    "pmh": "Atrial fibrillation ได้ warfarin, Hypertension, ข้อเข่าเสื่อม Morse fall scale สูง"
+   },
+   "prebriefing": "ทบทวนวัตถุประสงค์ของสถานการณ์ ย้ำ fiction contract, Basic Assumption และการรักษาความลับ แนะนำหุ่น อุปกรณ์ และสิ่งที่ทำได้/ทำไม่ได้กับหุ่น ยาทุกชนิดเป็นยาจำลอง ข้อมูลผู้ป่วยเป็นข้อมูลสมมติทั้งหมด จากนั้นอ่านข้อมูลส่งเวรให้ผู้เรียนฟัง: ผู้ป่วยหญิง 74 ปี น้ำหนัก 60 กก. รับไว้ด้วย pneumonia + AF ได้ warfarin (INR เมื่อวาน 3.8) Morse fall scale สูง เวลา 03.00 น. พบผู้ป่วยนั่งอยู่ที่พื้นข้างเตียง บอกว่า “จะไปห้องน้ำ ลื่นล้มหัวกระแทกขอบตู้” ราวกั้นเตียงลงไว้ 1 ข้าง ก่อนเกิดเหตุ GCS 15 รูม่านตา 3 mm ตอบสนองต่อแสงทั้งสองข้าง",
+   "moulage": "รอยช้ำและบวมที่หน้าผากขวา ผู้ป่วยนั่งอยู่ที่พื้นข้างเตียง ราวกั้นเตียงลง 1 ข้าง พื้นเปียกเล็กน้อย รองเท้าแตะวางห่างตัว O₂ cannula หลุดจากจมูก",
+   "simulator": {
+    "manikin": "หุ่น High-Fidelity ผู้ใหญ่ที่ปรับรูม่านตาได้ (หรือ SP ใน Baseline แล้วเปลี่ยนเป็นหุ่น)",
+    "initial_vs": "BP 150/88, HR 88 AF, RR 18, SpO₂ 95% O₂ cannula 2 LPM, Temp 37.0°C",
+    "airway": "Patent",
+    "lung": "Crepitation ที่ปอดขวาล่าง",
+    "heart": "Irregularly irregular",
+    "bowel": "Normoactive",
+    "voice": "พูดได้ชัดใน Baseline สับสนใน State 1 ครางใน State 2–3",
+    "iv": "Peripheral IV เบอร์ 22 แขนซ้าย (saline lock)",
+    "monitor": "ECG (AF), NIBP, SpO₂ — เริ่มแสดงค่าเมื่อผู้เรียนติด monitor",
+    "special": "รูม่านตา: Baseline 3 mm เท่ากัน → State 1 ขวา 4 mm ช้า → State 2 ขวา 5 mm ไม่ตอบสนอง"
+   },
+   "states": [
+    {
+     "label": "BASELINE",
+     "condition": "พบผู้ป่วยนั่งที่พื้นข้างเตียง รู้ตัวดี มีรอยช้ำหน้าผากขวา ปวดศีรษะ รูม่านตา 3 mm ตอบสนองต่อแสงทั้งสองข้าง POCT glucose 132 mg/dL",
+     "vs": {
+      "time": "0-5",
+      "rhythm": "Atrial fibrillation",
+      "bp": "150/88 (MAP 109)",
+      "o2sat": "95% O₂ cannula 2 LPM",
+      "rr": "18",
+      "hr": "88",
+      "temp": "37.0°C",
+      "pain": "4/10 ปวดศีรษะ",
+      "gcs": "E4V5M6 = 15",
+      "lung": "Crepitation ปอดขวาล่าง",
+      "heart": "Irregularly irregular",
+      "bowel": "Normoactive",
+      "mews": "1"
+     },
+     "vocalization": "“จะไปห้องน้ำค่ะ ลื่นล้มหัวกระแทกขอบตู้ ปวดหัวจัง”",
+     "confederate": "ผู้ช่วยพยาบาล: “ช่วยกันพยุงขึ้นเตียงเลยไหมคะพี่”",
+     "expected_actions": "ไม่รีบยกผู้ป่วย ประเมิน ABC และการบาดเจ็บ ระวังกระดูกต้นคอถ้าสงสัย · เคลื่อนย้ายขึ้นเตียงอย่างปลอดภัยด้วยทีม · ประเมิน GCS และรูม่านตา · ตรวจ POCT glucose · รายงานแพทย์ ISBAR ระบุ warfarin และ INR 3.8 · วางแผน neuro check ถี่ขึ้น",
+     "operator_notes": "ถ้าผู้เรียนรีบยกผู้ป่วยโดยไม่ประเมิน ให้ผู้ป่วยร้องว่า “เจ็บคอค่ะ เดี๋ยวก่อน” 1 ครั้ง",
+     "transition": "เปลี่ยนเมื่อรายงานแพทย์ครั้งแรกแล้ว หรือเมื่อครบ 5 นาที"
+    },
+    {
+     "label": "STATE 1",
+     "condition": "อาเจียน 1 ครั้ง ปวดศีรษะมากขึ้น พูดสับสน ลืมตาเมื่อเรียก รูม่านตาขวา 4 mm ตอบสนองช้า ซ้าย 3 mm",
+     "vs": {
+      "time": "5-9",
+      "rhythm": "Atrial fibrillation",
+      "bp": "172/94 (MAP 120)",
+      "o2sat": "95% O₂ cannula 2 LPM",
+      "rr": "18",
+      "hr": "76",
+      "temp": "37.0°C",
+      "pain": "7/10 ปวดศีรษะ",
+      "gcs": "E3V4M6 = 13",
+      "lung": "Crepitation ปอดขวาล่าง",
+      "heart": "Irregularly irregular",
+      "bowel": "Normoactive",
+      "mews": "2"
+     },
+     "vocalization": "“ปวดหัว...มาก นี่บ้านใครคะ”",
+     "confederate": "แพทย์เวร (ทางโทรศัพท์): “GCS เท่าไรครับ เทียบกับก่อนหน้าเป็นอย่างไร ได้ยาอะไรอยู่บ้าง”",
+     "expected_actions": "ระบุ GCS ลด 2 คะแนน + รูม่านตาไม่เท่ากัน → รายงานด่วน · จัดหัวเตียงสูง 30° ตะแคงป้องกันสำลัก เตรียม suction · เตรียมส่ง CT brain พร้อม transport monitor · เตรียมยาแก้ฤทธิ์ warfarin ตามคำสั่ง (vitamin K, PCC)",
+     "operator_notes": "ถ้าผู้เรียนบอก GCS = 14 ให้แพทย์ถามแยกทีละองค์ประกอบ E V M",
+     "transition": "เปลี่ยนเมื่อรายงานด่วนและเริ่มเตรียมส่ง CT หรือเมื่อครบ 4 นาที"
+    },
+    {
+     "label": "STATE 2",
+     "condition": "ไม่ลืมตาตามเสียงเรียก หายใจช้าไม่สม่ำเสมอ รูม่านตาขวา 5 mm ไม่ตอบสนองต่อแสง ความดันสูง ชีพจรช้า",
+     "vs": {
+      "time": "9-12",
+      "rhythm": "Atrial fibrillation with slow ventricular response",
+      "bp": "190/100 (MAP 130)",
+      "o2sat": "91% O₂ cannula 2 LPM",
+      "rr": "10",
+      "hr": "56",
+      "temp": "37.0°C",
+      "pain": "ประเมินด้วย CPOT",
+      "gcs": "E2V2M5 = 9",
+      "lung": "Crepitation ปอดขวาล่าง หายใจไม่สม่ำเสมอ",
+      "heart": "Irregular ช้า",
+      "bowel": "Normoactive",
+      "mews": "2"
+     },
+     "vocalization": "ครางไม่เป็นคำ",
+     "confederate": "หัวหน้าเวร: “ต้องการอะไรเพิ่ม บอกได้เลย”",
+     "expected_actions": "ระบุ Cushing’s triad (BP สูง, HR ช้า, การหายใจผิดปกติ) · เรียกทีมฉุกเฉิน · เปิดทางเดินหายใจ ช่วยหายใจด้วย BVM O₂ 100% · เตรียมใส่ท่อช่วยหายใจ · ปรึกษาประสาทศัลยแพทย์ตามคำสั่ง",
+     "operator_notes": "ถ้าไม่ช่วยหายใจภายใน 1 นาที ให้ SpO₂ ลดเป็น 86%",
+     "transition": "เปลี่ยนเมื่อเรียกทีมฉุกเฉินและเริ่มช่วยหายใจ หรือเมื่อครบ 3 นาที"
+    },
+    {
+     "label": "STATE 3",
+     "condition": "ช่วยหายใจด้วย BVM ออกซิเจนดีขึ้น ทีมแพทย์มาถึงเตรียมใส่ท่อช่วยหายใจและส่ง CT brain ด่วน",
+     "vs": {
+      "time": "12-15",
+      "rhythm": "Atrial fibrillation with slow ventricular response",
+      "bp": "184/98 (MAP 127)",
+      "o2sat": "97% BVM O₂ 100%",
+      "rr": "12 (ช่วยหายใจ)",
+      "hr": "58",
+      "temp": "37.0°C",
+      "pain": "ประเมินด้วย CPOT",
+      "gcs": "E2V2M5 = 9",
+      "lung": "เสียงลมเข้าเท่ากัน",
+      "heart": "Irregular ช้า",
+      "bowel": "Normoactive",
+      "mews": "2"
+     },
+     "vocalization": "ครางเบา ๆ",
+     "confederate": "ลูกชาย (ทางโทรศัพท์): “โรงพยาบาลโทรมากลางดึก แม่เป็นอะไรครับ ล้มได้อย่างไร”",
+     "expected_actions": "เตรียมเคลื่อนย้ายไป CT: transport monitor, O₂, BVM, ยาฉุกเฉิน, ผู้ร่วมเดินทางตามระดับความเสี่ยง · ส่งต่อข้อมูลด้วย ISBAR · หัวหน้าเวรแจ้งญาติตามข้อเท็จจริง · รายงานอุบัติการณ์พลัดตก · ทบทวนความเสี่ยงพลัดตกในหน่วย",
+     "operator_notes": "ให้ลูกชายถามว่า “ทำไมราวกั้นเตียงไม่ได้ยกขึ้น” เพื่อฝึกการสื่อสารอย่างตรงไปตรงมา",
+     "transition": "จบสถานการณ์เมื่อพร้อมเคลื่อนย้ายและแจ้งญาติแล้ว หรือเมื่อครบ 15 นาที"
+    }
+   ],
+   "run_summary": [
+    {
+     "state": "Baseline",
+     "status": "GCS 15, รูม่านตา 3 mm เท่ากัน, BP 150/88",
+     "actions": "ประเมิน ABC/การบาดเจ็บ, ย้ายขึ้นเตียง, GCS, POCT glucose, ISBAR (warfarin/INR)",
+     "focus": "การประเมินหลังพลัดตกอย่างเป็นระบบ"
+    },
+    {
+     "state": "State 1",
+     "status": "GCS 13, รูม่านตาขวา 4 mm ช้า, BP 172/94",
+     "actions": "รายงานด่วน, หัวสูง 30°, เตรียม CT และยาแก้ฤทธิ์ warfarin",
+     "focus": "การรับรู้การทรุดลงทางระบบประสาท"
+    },
+    {
+     "state": "State 2",
+     "status": "GCS 9, BP 190/100, HR 56, RR 10",
+     "actions": "ระบุ Cushing’s triad, เรียกทีมฉุกเฉิน, ช่วยหายใจ",
+     "focus": "การยกระดับและการป้องกันทางเดินหายใจ"
+    },
+    {
+     "state": "State 3",
+     "status": "SpO₂ 97% ด้วย BVM",
+     "actions": "เตรียมเคลื่อนย้ายไป CT, แจ้งญาติ, รายงานอุบัติการณ์",
+     "focus": "ความปลอดภัยในการเคลื่อนย้ายและการจัดการความเสี่ยง"
+    }
+   ],
+   "end_state": "ผู้ป่วยได้รับการช่วยหายใจ เตรียมใส่ท่อช่วยหายใจและส่ง CT brain ด่วนพร้อมทีม ได้รับคำสั่งยาแก้ฤทธิ์ warfarin ญาติได้รับแจ้ง และมีการรายงานอุบัติการณ์พลัดตก",
+   "key_teaching": "1) หลังพลัดตก ประเมินก่อนเคลื่อนย้ายเสมอ 2) GCS ต้องบอกแยก E V M และเทียบกับค่าก่อนหน้า 3) GCS ลด ≥ 2 หรือรูม่านตาไม่เท่ากัน = รายงานด่วน พร้อมข้อมูลยาต้านการแข็งตัวของเลือด 4) Cushing’s triad คือสัญญาณคุกคามชีวิต ต้องป้องกันทางเดินหายใจ 5) การรายงานอุบัติการณ์และการสื่อสารกับญาติอย่างตรงไปตรงมาเป็นส่วนหนึ่งของการดูแล",
+   "roles": {
+    "confederates": {
+     "md_attending": "แพทย์เวร (โทรศัพท์ แล้วมาที่เตียง)",
+     "md_attending_name": "",
+     "md_resident": "—",
+     "md_resident_name": "",
+     "charge_nurse": "ผู้ช่วยพยาบาล และลูกชายผู้ป่วย (ทางโทรศัพท์)",
+     "charge_nurse_name": "",
+     "rt": "—",
+     "rt_name": "",
+     "pharmacist": "—",
+     "pharmacist_name": "",
+     "anesthesia": "—",
+     "anesthesia_name": ""
+    },
+    "control_room": {
+     "director": "Simulation director",
+     "director_name": "",
+     "debriefer": "ผู้นำ debriefing (RN5–RN6/CNE)",
+     "debriefer_name": "",
+     "sim_tech": "Operator (RN3–RN4)",
+     "sim_tech_name": "",
+     "content_expert": "CNS / แพทย์ผู้เชี่ยวชาญ",
+     "content_expert_name": "",
+     "runner": "",
+     "runner_name": "",
+     "observer": "ผู้ประเมินตาม checklist",
+     "observer_name": ""
+    },
+    "participants": [
+     {
+      "state1": "RN1 พยาบาลเจ้าของไข้ (เวรดึก)",
+      "state2": "RN2 พยาบาลคนที่สอง",
+      "state3": "RN3 หัวหน้าเวร",
+      "state4": "RN4 ผู้บันทึก/ผู้สังเกต"
+     }
+    ]
+   },
+   "debriefing": {
+    "model": "PEARLS",
+    "model_other": "",
+    "points": {
+     "state1": [
+      {
+       "topic": "ความรู้สึกแรกเมื่อพบผู้ป่วย",
+       "inquiry": "เมื่อพบผู้ป่วยนั่งอยู่บนพื้น ความรู้สึกแรกของทีมคืออะไร และอะไรอยู่ในใจตอนนั้นครับ"
+      },
+      {
+       "topic": "การประเมินก่อนเคลื่อนย้าย",
+       "inquiry": "ผมสังเกตว่าทีมหยุดประเมินก่อนพยุงผู้ป่วยขึ้นเตียง ผมคิดว่าสำคัญมาก ทีมมองหาอะไรบ้างในตอนนั้นครับ"
+      },
+      {
+       "topic": "ข้อมูลยาในการรายงานครั้งแรก",
+       "inquiry": "ในการรายงานครั้งแรก ข้อมูลใดที่ทีมคิดว่าทำให้แพทย์ตัดสินใจได้เร็วขึ้น เพราะอะไรครับ"
+      },
+      {
+       "topic": "การวางแผน neuro check",
+       "inquiry": "หลังรายงานครั้งแรก ทีมวางแผนความถี่ของ neuro check อย่างไร และใช้อะไรเป็นหลักในการกำหนดครับ"
+      }
+     ],
+     "state2": [
+      {
+       "topic": "การให้คะแนน GCS",
+       "inquiry": "ใน State 1 ผมได้ยินคะแนน GCS ต่างกันระหว่างสมาชิก แต่ละท่านให้คะแนน E อย่างไร ช่วยเล่าให้ฟังหน่อยครับ"
+      },
+      {
+       "topic": "การประเมินรูม่านตา",
+       "inquiry": "ทีมสังเกตเห็นความแตกต่างของรูม่านตาเมื่อไร และข้อมูลนี้เปลี่ยนความเร่งด่วนของทีมอย่างไรครับ"
+      },
+      {
+       "topic": "การรายงานเร่งด่วน",
+       "inquiry": "ผมเห็นว่าทีมรายงานซ้ำทันทีเมื่อ GCS ลด 2 คะแนน อะไรเป็นตัวกระตุ้นให้ตัดสินใจโทรอีกครั้งครับ"
+      },
+      {
+       "topic": "การเตรียมก่อนส่ง CT",
+       "inquiry": "ผมสังเกตว่ายังไม่มีการเตรียม suction ตอนผู้ป่วยอาเจียน ผมกังวลเรื่องการสำลัก ทีมคิดอย่างไรกับจังหวะนั้นครับ"
+      }
+     ],
+     "state3": [
+      {
+       "topic": "การระบุ Cushing’s triad",
+       "inquiry": "เมื่อเห็น BP สูงขึ้นและชีพจรช้าลงพร้อมกัน ทีมตีความอย่างไร และทำอะไรเป็นอย่างแรกครับ"
+      },
+      {
+       "topic": "การเรียกทีมฉุกเฉิน",
+       "inquiry": "อะไรทำให้ทีมตัดสินใจเรียกทีมฉุกเฉินในจังหวะนั้น และมีอะไรที่ทำให้ลังเลบ้างครับ"
+      },
+      {
+       "topic": "การสื่อสารกับญาติ",
+       "inquiry": "เมื่อลูกชายถามเรื่องราวกั้นเตียง หัวหน้าเวรเลือกตอบอย่างไร และรู้สึกอย่างไรกับคำถามนั้นครับ"
+      },
+      {
+       "topic": "ปัจจัยระบบและการป้องกัน",
+       "inquiry": "ปัจจัยใดในระบบที่ทำให้ผู้ป่วยรายนี้พลัดตก และทีมคิดว่าจะป้องกันอย่างไรในหน่วยของเราครับ"
+      }
+     ]
+    }
+   },
+   "indicators": [
+    {
+     "indicator": "ประเมิน ABC และการบาดเจ็บก่อนเคลื่อนย้ายผู้ป่วยจากพื้น",
+     "criteria": "ผ่าน = ประเมินก่อนเคลื่อนย้ายและใช้ทีมอย่างน้อย 2 คน | ไม่ผ่าน = ยกผู้ป่วยทันทีโดยไม่ประเมิน",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "ประเมิน GCS ได้ถูกต้องในทุก state",
+     "criteria": "ผ่าน = บอกคะแนนแยก E V M คลาดเคลื่อนไม่เกิน 1 คะแนน (15, 13, 9) | ไม่ผ่าน = คลาดเคลื่อนเกิน 1 คะแนนใน state ใด",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "ประเมินรูม่านตาทั้งสองข้างและตรวจ POCT glucose",
+     "criteria": "ผ่าน = บอกขนาดและปฏิกิริยาต่อแสงทั้ง 2 ข้าง และตรวจ glucose ภายใน 5 นาที | ไม่ผ่าน = ขาดข้อใดข้อหนึ่ง",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "รายงานแพทย์ด้วย ISBAR พร้อมข้อมูล warfarin และ INR 3.8",
+     "criteria": "ผ่าน = ระบุกลไกการบาดเจ็บ warfarin และ INR 3.8 ในการรายงานครั้งแรกภายใน 5 นาที | ไม่ผ่าน = ไม่ระบุยาหรือ INR",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "รายงานแพทย์ทันทีเมื่อ GCS ลด ≥ 2 คะแนน หรือรูม่านตาไม่เท่ากัน",
+     "criteria": "ผ่าน = รายงานภายใน 2 นาทีหลังพบการเปลี่ยนแปลง | ไม่ผ่าน = เกิน 2 นาที หรือไม่รายงาน",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "ระบุ Cushing’s triad ครบ 3 ข้อ และป้องกันทางเดินหายใจ",
+     "criteria": "ผ่าน = ระบุ BP สูง HR ช้า การหายใจผิดปกติ และเริ่มช่วยหายใจภายใน 1 นาที | ไม่ผ่าน = ระบุไม่ครบ หรือไม่ช่วยหายใจ",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "เตรียมเคลื่อนย้ายไป CT อย่างปลอดภัย",
+     "criteria": "ผ่าน = มี transport monitor, O₂, BVM และผู้ร่วมเดินทางตามระดับความเสี่ยง ครบ 4 ข้อ | ไม่ผ่าน = ขาดข้อใดข้อหนึ่ง",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "จัดการหลังเหตุพลัดตก: รายงานอุบัติการณ์และแจ้งญาติ",
+     "criteria": "ผ่าน = แจ้งญาติตามข้อเท็จจริงและเริ่มรายงานอุบัติการณ์ภายใน 15 นาทีของสถานการณ์ | ไม่ผ่าน = ไม่แจ้งญาติ หรือไม่รายงาน",
+     "time": "",
+     "comments": ""
+    }
+   ],
+   "logistics": {
+    "equipment": [
+     "เตียงผู้ป่วยวิกฤตพร้อมราวกั้นเตียง",
+     "Monitor จำลอง (ECG, NIBP, SpO₂)",
+     "Transport monitor",
+     "เครื่อง suction",
+     "BVM พร้อม reservoir",
+     "ไฟฉายตรวจรูม่านตา",
+     "POCT glucose",
+     "โทรศัพท์",
+     "ถังออกซิเจนสำหรับเคลื่อนย้าย"
+    ],
+    "supplies": [
+     "แบบบันทึก GCS / neuro sign",
+     "ใบผล INR",
+     "แบบรายงานอุบัติการณ์",
+     "Cervical collar",
+     "อุปกรณ์ใส่ท่อช่วยหายใจ",
+     "ใบคำสั่งแพทย์จำลอง",
+     "ถุงมือ S/M/L"
+    ],
+    "medications": [
+     "Vitamin K 10 mg IV ตามคำสั่งแพทย์ — ยาจำลอง",
+     "Prothrombin complex concentrate (PCC) ขนาดตามคำสั่งแพทย์ — ยาจำลอง",
+     "0.9% NaCl 1,000 ml"
+    ],
+    "moulage_props": [
+     "รอยช้ำและบวมที่หน้าผากขวา",
+     "อาเจียนจำลอง",
+     "พื้นเปียกจำลองและรองเท้าแตะ",
+     "ป้ายข้อมือผู้ป่วยและป้าย Fall risk"
+    ],
+    "manikin": "หุ่น High-Fidelity ผู้ใหญ่ที่ปรับรูม่านตาได้"
+   },
+   "references": {
+    "simulation": [
+     "INACSL Standards Committee. Healthcare Simulation Standards of Best Practice (2021).",
+     "Eppich W, Cheng A. Promoting Excellence and Reflective Learning in Simulation (PEARLS). Simul Healthc. 2015.",
+     "TeamSTEPPS 2.0 Pocket Guide, Agency for Healthcare Research and Quality."
+    ],
+    "clinical": [
+     "Brain Trauma Foundation. Guidelines for the Management of Severe Traumatic Brain Injury, 4th Edition.",
+     "SOP พยาบาลวิชาชีพ Critical Care Unit (CCD) - Core (SOP-CCD-NSO-001 Rev.01) หัวข้อ 5.3 การเฝ้าระวัง, 5.1 การรับผู้ป่วย/ประเมินความเสี่ยง, 5.15 การเคลื่อนย้าย, 5.16 การบริหารความเสี่ยง",
+     "แนวปฏิบัติการป้องกันและดูแลผู้ป่วยพลัดตกหกล้มของโรงพยาบาล (ต้องยืนยันฉบับปัจจุบัน)",
+     "Teasdale G, et al. The Glasgow Coma Scale at 40 years. Lancet Neurol. 2014."
+    ]
+   },
+   "appendix": {
+    "cxr": "—",
+    "ekg": "Atrial fibrillation rate 76-88 → slow ventricular response 56",
+    "lab": "INR 3.8 (เมื่อวาน), POCT glucose 132 mg/dL, Hb 11.8 g/dL, Platelet 198,000 /µL",
+    "imaging": "CT brain (ผลหลังจบสถานการณ์ ใช้ใน debriefing): acute right subdural hematoma with midline shift — ภาพจำลอง"
+   }
+  }
+ },
+ {
+  "id": "ccd-sedation-resp",
+  "name": "SC-06 Procedural sedation ระหว่างใส่ ICD → กดการหายใจ (Sedation-related respiratory depression)",
+  "setting": "Critical Care Unit (CCD)",
+  "tag": "Time-out · capnography · speak up · airway ก่อนยาต้านฤทธิ์ · ICD care · pain",
+  "data": {
+   "meta": {
+    "title": "การเฝ้าระวัง การทักท้วง และการตอบสนองแบบประสานงานเมื่อเกิดภาวะกดการหายใจระหว่าง procedural sedation",
+    "patient_name": "สมชาย รุ่งเรือง (Somchai Rungrueang)",
+    "course": "Core Critical Care Nursing Simulation Program — Critical Care Unit (CCD)",
+    "developed": "ฝ่ายวิชาการพยาบาล และ Clinical Nurse Educator โรงพยาบาลกรุงเทพ สำนักงานใหญ่",
+    "form_no": "",
+    "verified_date": "",
+    "approved": "",
+    "reviewed": ""
+   },
+   "time": {
+    "setup": 5,
+    "simulation": 15,
+    "debriefing": 25,
+    "total": 45
+   },
+   "classification": {
+    "discipline": "RNs",
+    "participant": "Team",
+    "level": "Competent",
+    "fidelity": "High-Fidelity",
+    "scenario_type": "Progressive / Multi-State (4 states)"
+   },
+   "goals": {
+    "concept": "Monitoring, Speaking Up & Coordinated Response, Procedural Safety",
+    "practice": "Deliberate Practice, Systems-Based Practice",
+    "participant": "Team",
+    "evaluation": "Formative (RN ประจำปี) / Summative (พยาบาลใหม่ระยะ 3)"
+   },
+   "objectives": [
+    "สามารถเตรียมผู้ป่วยและทำ Time-out ครบองค์ประกอบ พร้อมตรวจอุปกรณ์ฉุกเฉินและยาต้านฤทธิ์ 2 ชนิดก่อนเริ่มให้ยา",
+    "สามารถเฝ้าระวังระหว่าง procedural sedation โดยบันทึก VS, SpO₂, ETCO₂ และ RASS ทุก 5 นาที",
+    "สามารถขอหยุดหัตถการและจัดการภาวะกดการหายใจตามลำดับขั้นตอนได้ภายใน 1 นาทีหลังพบ",
+    "สามารถดูแลระบบระบายทรวงอกและประเมินความปวดด้วย NRS ซ้ำภายใน 5 นาทีหลังให้ opioid ได้ถูกต้อง"
+   ],
+   "demographics": {
+    "name": "สมชาย รุ่งเรือง (Somchai Rungrueang)",
+    "hn": "69-0000106",
+    "age": "62 ปี",
+    "gender": "ชาย",
+    "weight": "65 kg",
+    "arrival": "รับไว้ CCD ด้วยหายใจเหนื่อยจาก pleural effusion ขวาปริมาณมาก",
+    "code_status": "Full code",
+    "diagnosis": "Malignant pleural effusion, right — ใส่ ICD ข้างเตียงภายใต้ procedural sedation",
+    "allergies": "ปฏิเสธการแพ้ยาและอาหาร",
+    "pmh": "Lung cancer stage IV, COPD"
+   },
+   "prebriefing": "ทบทวนวัตถุประสงค์ของสถานการณ์ ย้ำ fiction contract, Basic Assumption และการรักษาความลับ แนะนำหุ่น อุปกรณ์ และสิ่งที่ทำได้/ทำไม่ได้กับหุ่น ยาทุกชนิดเป็นยาจำลอง ข้อมูลผู้ป่วยเป็นข้อมูลสมมติทั้งหมด จากนั้นอ่านข้อมูลส่งเวรให้ผู้เรียนฟัง: ผู้ป่วยชาย 62 ปี น้ำหนัก 65 กก. Malignant pleural effusion ขวาปริมาณมาก หายใจเหนื่อย แพทย์จะใส่ ICD ข้างเตียงภายใต้ procedural sedation ที่ intensivist เป็นผู้สั่งและให้ยา คำสั่ง: Midazolam 1 mg IV และ fentanyl 50 mcg IV ก่อนทำ ให้ซ้ำได้ตามแพทย์ผู้ทำหัตถการ ใบยินยอมลงนามแล้ว งดน้ำงดอาหาร 6 ชม. ยาประจำ: morphine 2 mg IV ทุก 4 ชม. ถ้าปวด (ได้ครั้งล่าสุด 1 ชม. ก่อน)",
+   "moulage": "ผู้ป่วยนอนศีรษะสูง หายใจเหนื่อย ทำเครื่องหมายตำแหน่งใส่ ICD ที่ทรวงอกขวา ชุด ICD และระบบระบายทรวงอกวางพร้อมข้างเตียง ติดป้ายข้อมือผู้ป่วย",
+   "simulator": {
+    "manikin": "หุ่น High-Fidelity ผู้ใหญ่ + task trainer ใส่ ICD (หรือจำลองด้วยชุดอุปกรณ์)",
+    "initial_vs": "BP 134/80, HR 96, RR 24, SpO₂ 93% O₂ cannula 3 LPM, ETCO₂ 34 mmHg, Temp 37.0°C",
+    "airway": "Patent · State 2: มีเสียงกรน (partial obstruction)",
+    "lung": "เสียงหายใจเบาลงที่ปอดขวาล่าง",
+    "heart": "Regular",
+    "bowel": "Normoactive",
+    "voice": "พูดได้ กังวล → ง่วงซึม → ตอบเมื่อเขย่า",
+    "iv": "Peripheral IV เบอร์ 20 แขนซ้าย พร้อม NSS KVO",
+    "monitor": "ECG, NIBP ทุก 5 นาที, SpO₂, ETCO₂ waveform (capnography ทาง nasal cannula)",
+    "special": "ETCO₂ ต้องขึ้นก่อน SpO₂ ลด: 34 → 45 → 58 mmHg · ระบบระบายทรวงอกต่อถุงน้ำสีเหลืองปนเลือดจำลอง"
+   },
+   "states": [
+    {
+     "label": "BASELINE",
+     "condition": "ก่อนทำหัตถการ: ผู้ป่วยกังวล หายใจเหนื่อย ปวดชายโครงขวา NRS 5 ทีมเตรียมอุปกรณ์",
+     "vs": {
+      "time": "0-4",
+      "rhythm": "Sinus rhythm",
+      "bp": "134/80 (MAP 98)",
+      "o2sat": "93% O₂ cannula 3 LPM",
+      "rr": "24",
+      "hr": "96",
+      "temp": "37.0°C",
+      "pain": "5/10 ชายโครงขวา",
+      "gcs": "E4V5M6 = 15",
+      "lung": "เสียงหายใจเบาที่ปอดขวาล่าง",
+      "heart": "Regular",
+      "bowel": "Normoactive",
+      "mews": "2"
+     },
+     "vocalization": "“จะเจ็บไหมครับหมอ ผมกลัว”",
+     "confederate": "แพทย์ผู้ทำหัตถการ: “พร้อมแล้วเริ่มให้ยาเลยนะครับ”",
+     "expected_actions": "ตรวจใบยินยอม NPO และประวัติยาที่ได้ก่อนหน้า · แจ้งแพทย์ว่าได้ morphine เมื่อ 1 ชม. ก่อน (ปัจจัยเสี่ยง) · ตรวจ suction, O₂, BVM, naloxone และ flumazenil · ต่อ capnography · Time-out ครบองค์ประกอบ ทีมหยุดกิจกรรมทั้งหมด · จัดท่ายกแขนขวาเหนือศีรษะ · กำหนดพยาบาลเฝ้าระวังที่ไม่ช่วยหัตถการ",
+     "operator_notes": "ให้แพทย์เร่งเริ่มให้ยาก่อน Time-out 1 ครั้ง เพื่อเปิดโอกาสให้ผู้เรียนทักท้วง",
+     "transition": "เปลี่ยนเมื่อ Time-out เสร็จและให้ยาครั้งแรก หรือเมื่อครบ 4 นาที"
+    },
+    {
+     "label": "STATE 1",
+     "condition": "หลังได้ fentanyl รวม 100 mcg และ midazolam รวม 2 mg: ผู้ป่วยง่วงซึม RASS −2 ETCO₂ ขึ้นจาก 34 เป็น 45 mmHg โดย SpO₂ ยังไม่ลด",
+     "vs": {
+      "time": "4-7",
+      "rhythm": "Sinus rhythm",
+      "bp": "118/70 (MAP 86)",
+      "o2sat": "93% O₂ cannula 3 LPM",
+      "rr": "12",
+      "hr": "80",
+      "temp": "37.0°C",
+      "pain": "ประเมินไม่ได้ชัด (ง่วง)",
+      "gcs": "E3V4M6 = 13",
+      "lung": "เสียงหายใจเบาที่ปอดขวาล่าง",
+      "heart": "Regular",
+      "bowel": "Normoactive",
+      "mews": "1"
+     },
+     "vocalization": "พึมพำเมื่อเรียก",
+     "confederate": "แพทย์ผู้ทำหัตถการ (ก้มหน้าทำหัตถการ): “ยังขยับอยู่ ขอ fentanyl อีก 50 ครับ”",
+     "expected_actions": "บันทึก VS, SpO₂, ETCO₂ และ RASS ทุก 5 นาที · สังเกต ETCO₂ ที่สูงขึ้นและ RR ที่ลดลง · แจ้งแพทย์ถึงแนวโน้มและประวัติ morphine ก่อนให้ยาเพิ่ม · กระตุ้นผู้ป่วยด้วยเสียงเรียก",
+     "operator_notes": "ถ้าผู้เรียนไม่ทักท้วง ให้ถือว่าให้ยาเพิ่มแล้ว และไป State 2 ทันที",
+     "transition": "เปลี่ยนเมื่อผู้เรียนแจ้งแนวโน้ม ETCO₂ หรือเมื่อครบ 3 นาที"
+    },
+    {
+     "label": "STATE 2",
+     "condition": "กดการหายใจ: ตอบสนองเฉพาะเมื่อเขย่า (RASS −4) กรนเสียงดัง ETCO₂ 58 mmHg หายใจ 6 ครั้ง/นาที",
+     "vs": {
+      "time": "7-10",
+      "rhythm": "Sinus bradycardia",
+      "bp": "98/56 (MAP 70)",
+      "o2sat": "84% O₂ cannula 3 LPM",
+      "rr": "6",
+      "hr": "58",
+      "temp": "37.0°C",
+      "pain": "ประเมินไม่ได้",
+      "gcs": "E2V2M5 = 9",
+      "lung": "เสียงหายใจเบา มีเสียงกรน",
+      "heart": "Bradycardia regular",
+      "bowel": "Normoactive",
+      "mews": "5"
+     },
+     "vocalization": "กรนเสียงดัง ไม่ตอบคำถาม",
+     "confederate": "แพทย์ผู้ทำหัตถการ: “อีกนิดเดียวจะเสร็จแล้วครับ”",
+     "expected_actions": "ขอให้หยุดหัตถการชั่วคราว (speak up) · กระตุ้นผู้ป่วย เปิดทางเดินหายใจด้วย jaw thrust · เพิ่ม O₂ ช่วยหายใจด้วย BVM ถ้าไม่ดีขึ้น · เรียกความช่วยเหลือ · เตรียม naloxone เจือจางให้ทีละน้อยตามคำสั่ง (และ flumazenil ถ้าจำเป็น)",
+     "operator_notes": "ถ้าผู้เรียนให้ยาต้านฤทธิ์ก่อนจัดทางเดินหายใจ ให้ SpO₂ ลดต่อเป็น 80% จนกว่าจะเปิดทางเดินหายใจ",
+     "transition": "เปลี่ยนเมื่อช่วยหายใจและให้ยาต้านฤทธิ์ตามคำสั่ง หรือเมื่อครบ 3 นาที"
+    },
+    {
+     "label": "STATE 3",
+     "condition": "ฟื้นตัว ใส่ ICD สำเร็จ สิ่งระบายสีเหลืองปนเลือด 600 mL ใน 5 นาที ผู้ป่วยเริ่มไอ แน่นหน้าอก ปวดแผล NRS 6",
+     "vs": {
+      "time": "10-15",
+      "rhythm": "Sinus rhythm",
+      "bp": "120/72 (MAP 88)",
+      "o2sat": "95% O₂ mask 6 LPM",
+      "rr": "14",
+      "hr": "84",
+      "temp": "37.0°C",
+      "pain": "6/10 ตำแหน่งใส่ ICD",
+      "gcs": "E3V5M6 = 14",
+      "lung": "เสียงหายใจปอดขวาดีขึ้น มี crepitation เล็กน้อย",
+      "heart": "Regular",
+      "bowel": "Normoactive",
+      "mews": "1"
+     },
+     "vocalization": "“แน่นหน้าอกครับ ไอไม่หยุดเลย เจ็บตรงที่ใส่สายด้วย”",
+     "confederate": "แพทย์ผู้ทำหัตถการ: “ออกเยอะดีนะครับ ปล่อยไหลไปก่อน”",
+     "expected_actions": "ประเมินระบบระบาย: ขวดต่ำกว่าทรวงอก fluctuation ลักษณะและปริมาณสิ่งระบาย · ระบุความเสี่ยง re-expansion pulmonary edema แจ้งแพทย์ และปฏิบัติตามคำสั่งจำกัดการระบาย ไม่หนีบสายโดยไม่มีข้อบ่งชี้ · เฝ้าระวัง resedation หลังยาต้านฤทธิ์ · ประเมินปวดด้วย NRS และประเมินซ้ำภายใน 5 นาทีหลังให้ opioid · ส่ง CXR",
+     "operator_notes": "ถ้าผู้เรียนรายงานอาการไอ/แน่นหน้าอก ให้แพทย์สั่งจำกัดการระบายชั่วคราว",
+     "transition": "จบสถานการณ์เมื่อรายงานแพทย์และวางแผนเฝ้าระวังต่อเนื่อง หรือเมื่อครบ 15 นาที"
+    }
+   ],
+   "run_summary": [
+    {
+     "state": "Baseline",
+     "status": "RR 24, SpO₂ 93%, ETCO₂ 34, NRS 5",
+     "actions": "ตรวจใบยินยอม/NPO/ประวัติยา, อุปกรณ์ฉุกเฉิน + ยาต้านฤทธิ์, capnography, Time-out",
+     "focus": "การเตรียมความพร้อมและความปลอดภัยก่อนหัตถการ"
+    },
+    {
+     "state": "State 1",
+     "status": "RR 12, ETCO₂ 45, RASS −2, SpO₂ 93%",
+     "actions": "บันทึกทุก 5 นาที, แจ้งแนวโน้ม ETCO₂ และประวัติ morphine",
+     "focus": "การเฝ้าระวังและสัญญาณเตือนแรก"
+    },
+    {
+     "state": "State 2",
+     "status": "RR 6, SpO₂ 84%, ETCO₂ 58, RASS −4",
+     "actions": "Speak up หยุดหัตถการ, jaw thrust, BVM, naloxone ตามคำสั่ง",
+     "focus": "การทักท้วงและการจัดทางเดินหายใจก่อนยาต้านฤทธิ์"
+    },
+    {
+     "state": "State 3",
+     "status": "RR 14, SpO₂ 95%, ICD ออก 600 mL/5 นาที, NRS 6",
+     "actions": "ประเมินระบบระบาย, รายงานไอ/แน่นหน้าอก, เฝ้าระวัง resedation, ประเมินปวด",
+     "focus": "การดูแลหลังหัตถการ"
+    }
+   ],
+   "end_state": "ผู้ป่วยหายใจเอง RR 14 SpO₂ 95% ICD ทำงานดี จำกัดการระบายตามคำสั่ง เฝ้าระวัง resedation ต่อเนื่อง รอ CXR และประเมินความปวดซ้ำ",
+   "key_teaching": "1) Time-out และอุปกรณ์ฉุกเฉิน/ยาต้านฤทธิ์ต้องพร้อมก่อนให้ยา 2) พยาบาลเฝ้าระวัง sedation ต้องไม่ช่วยหัตถการพร้อมกัน 3) ETCO₂ เตือนก่อน SpO₂ เสมอ 4) จัดทางเดินหายใจก่อนให้ยาต้านฤทธิ์ และเฝ้าระวัง resedation 5) ไอและแน่นหน้าอกระหว่างระบายน้ำปริมาณมากต้องรายงานทันที",
+   "roles": {
+    "confederates": {
+     "md_attending": "แพทย์ผู้ทำหัตถการ (intensivist)",
+     "md_attending_name": "",
+     "md_resident": "—",
+     "md_resident_name": "",
+     "charge_nurse": "—",
+     "charge_nurse_name": "",
+     "rt": "—",
+     "rt_name": "",
+     "pharmacist": "—",
+     "pharmacist_name": "",
+     "anesthesia": "—",
+     "anesthesia_name": ""
+    },
+    "control_room": {
+     "director": "Simulation director",
+     "director_name": "",
+     "debriefer": "ผู้นำ debriefing (RN5–RN6/CNE)",
+     "debriefer_name": "",
+     "sim_tech": "Operator (RN3–RN4)",
+     "sim_tech_name": "",
+     "content_expert": "CNS / แพทย์ผู้เชี่ยวชาญ",
+     "content_expert_name": "",
+     "runner": "",
+     "runner_name": "",
+     "observer": "ผู้ประเมินตาม checklist",
+     "observer_name": ""
+    },
+    "participants": [
+     {
+      "state1": "RN1 พยาบาลเฝ้าระวัง sedation",
+      "state2": "RN2 พยาบาลช่วยหัตถการ",
+      "state3": "RN3 หัวหน้าเวร (เข้าช่วยเมื่อถูกเรียก)",
+      "state4": "RN4 ผู้บันทึก/ผู้สังเกต"
+     }
+    ]
+   },
+   "debriefing": {
+    "model": "PEARLS",
+    "model_other": "",
+    "points": {
+     "state1": [
+      {
+       "topic": "ความรู้สึกเมื่อต้องขอหยุดหัตถการ",
+       "inquiry": "ตอนที่ต้องบอกแพทย์ให้หยุดหัตถการ ทีมรู้สึกอย่างไร และอะไรอยู่ในใจตอนนั้นครับ"
+      },
+      {
+       "topic": "Time-out ภายใต้ความเร่ง",
+       "inquiry": "ผมสังเกตว่าแพทย์เร่งให้เริ่มยาก่อน Time-out และทีมขอทำ Time-out ก่อน ผมคิดว่าสำคัญมาก อะไรทำให้ทีมยืนยันครับ"
+      },
+      {
+       "topic": "ประวัติ morphine",
+       "inquiry": "ประวัติว่าได้ morphine เมื่อ 1 ชม. ก่อน ทีมคิดว่าควรเปลี่ยนแผนการให้ยาและการเฝ้าระวังอย่างไรครับ"
+      },
+      {
+       "topic": "บทบาทพยาบาลเฝ้าระวัง",
+       "inquiry": "ผมเห็นช่วงหนึ่งที่พยาบาลเฝ้าระวังหันไปช่วยส่งอุปกรณ์ ผมกังวลเรื่องการละสายตาจากผู้ป่วย ทีมมองอย่างไรครับ"
+      }
+     ],
+     "state2": [
+      {
+       "topic": "ETCO₂ เตือนก่อน SpO₂",
+       "inquiry": "ETCO₂ ขึ้นจาก 34 เป็น 45 ก่อนที่ SpO₂ จะลด ตอนนั้นทีมเห็นอะไรบ้าง และตีความอย่างไรครับ"
+      },
+      {
+       "topic": "การทักท้วงก่อนให้ยาเพิ่ม",
+       "inquiry": "เมื่อแพทย์ขอ fentanyl เพิ่มอีก 50 mcg ทีมตัดสินใจอย่างไร และอะไรช่วยหรือขวางการพูดในจังหวะนั้นครับ"
+      },
+      {
+       "topic": "การบันทึกทุก 5 นาที",
+       "inquiry": "ทีมทำอย่างไรให้การบันทึก VS, ETCO₂ และ RASS ทุก 5 นาทีไม่หลุดระหว่างหัตถการครับ"
+      },
+      {
+       "topic": "ลำดับการจัดการภาวะกดการหายใจ",
+       "inquiry": "ทำไมการจัดทางเดินหายใจจึงต้องมาก่อนการให้ยาต้านฤทธิ์ ทีมคิดอย่างไรกับลำดับที่ทำไปครับ"
+      }
+     ],
+     "state3": [
+      {
+       "topic": "การให้ยาต้านฤทธิ์",
+       "inquiry": "ผมเห็นว่า naloxone ถูกเจือจางและให้ทีละน้อย ทีมคิดว่าเหตุผลคืออะไร และต้องเฝ้าระวังอะไรต่อครับ"
+      },
+      {
+       "topic": "การดูแลระบบระบายทรวงอก",
+       "inquiry": "ทีมตรวจอะไรบ้างที่ระบบระบายหลังใส่ ICD และอะไรทำให้ตัดสินใจไม่หนีบสายเองครับ"
+      },
+      {
+       "topic": "ไอและแน่นหน้าอกระหว่างระบาย",
+       "inquiry": "ทำไมอาการไอและแน่นหน้าอกระหว่างระบายน้ำ 600 mL จึงสำคัญ และทีมสื่อสารกับแพทย์อย่างไรครับ"
+      },
+      {
+       "topic": "สิ่งที่จะนำไปใช้",
+       "inquiry": "ถ้าสรุปบทบาทพยาบาลเฝ้าระวัง sedation 3 ข้อจากวันนี้ แต่ละท่านจะเลือกข้อใด เพราะอะไรครับ"
+      }
+     ]
+    }
+   },
+   "indicators": [
+    {
+     "indicator": "เตรียมผู้ป่วย: ตรวจใบยินยอม NPO และประวัติยาที่ได้ก่อนหน้า",
+     "criteria": "ผ่าน = ตรวจครบ 3 ข้อและแจ้งแพทย์เรื่อง morphine 1 ชม. ก่อน | ไม่ผ่าน = ขาดข้อใด หรือไม่แจ้งประวัติ morphine",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "ตรวจอุปกรณ์ฉุกเฉินและยาต้านฤทธิ์ 2 ชนิดก่อนเริ่มให้ยา",
+     "criteria": "ผ่าน = มี suction, O₂, BVM, naloxone, flumazenil และ capnography ครบ 6 รายการ | ไม่ผ่าน = ขาดรายการใด",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "ทำ Time-out ครบองค์ประกอบก่อนเริ่มหัตถการ",
+     "criteria": "ผ่าน = ทีมหยุดกิจกรรมทั้งหมด ยืนยันผู้ป่วย หัตถการ และข้างที่ทำ ครบ 3 ข้อ | ไม่ผ่าน = เริ่มให้ยาก่อน Time-out",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "เฝ้าระวังระหว่าง procedural sedation โดยบันทึก VS, SpO₂, ETCO₂ และ RASS ทุก 5 นาที",
+     "criteria": "ผ่าน = บันทึกครบ 4 ค่าทุก 5 นาที และไม่ช่วยหัตถการพร้อมกัน | ไม่ผ่าน = บันทึกไม่ครบ หรือละจากผู้ป่วยไปช่วยหัตถการ",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "ระบุภาวะกดการหายใจจาก RR, ETCO₂, SpO₂ และระดับความรู้สึกตัว",
+     "criteria": "ผ่าน = แจ้งแนวโน้ม ETCO₂ ≥ 45 mmHg หรือ RR ≤ 12 ก่อน SpO₂ ลด | ไม่ผ่าน = ระบุได้เมื่อ SpO₂ < 90% แล้วเท่านั้น",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "ขอหยุดหัตถการและจัดการภาวะกดการหายใจตามลำดับขั้นตอน",
+     "criteria": "ผ่าน = speak up และเปิดทางเดินหายใจ/ช่วยหายใจภายใน 1 นาทีหลังพบ ก่อนให้ยาต้านฤทธิ์ | ไม่ผ่าน = เกิน 1 นาที หรือให้ยาก่อนจัดทางเดินหายใจ",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "ให้ยาต้านฤทธิ์ตามคำสั่งและเฝ้าระวัง resedation",
+     "criteria": "ผ่าน = ให้ naloxone เจือจางครั้งละ 0.04 mg ตามคำสั่ง และวางแผนเฝ้าระวังต่อ | ไม่ผ่าน = ขนาดผิด หรือไม่เฝ้าระวังต่อ",
+     "time": "",
+     "comments": ""
+    },
+    {
+     "indicator": "ดูแลระบบระบายทรวงอกและประเมินความปวดด้วย NRS ซ้ำภายใน 5 นาทีหลังให้ opioid",
+     "criteria": "ผ่าน = ประเมินระบบระบายครบ รายงานไอ/แน่นหน้าอก และประเมินปวดซ้ำภายใน 5 นาที | ไม่ผ่าน = หนีบสายโดยไม่มีข้อบ่งชี้ หรือไม่ประเมินซ้ำ",
+     "time": "",
+     "comments": ""
+    }
+   ],
+   "logistics": {
+    "equipment": [
+     "เตียงผู้ป่วยวิกฤต",
+     "Monitor จำลองพร้อม capnography (ETCO₂)",
+     "ชุด ICD และระบบระบายทรวงอก (chest drain system)",
+     "เครื่อง suction",
+     "BVM พร้อม reservoir และ oral airway",
+     "อุปกรณ์ให้ออกซิเจน (cannula, mask with bag)",
+     "โทรศัพท์"
+    ],
+    "supplies": [
+     "ใบยินยอมทำหัตถการ",
+     "แบบ Time-out",
+     "แบบบันทึก sedation",
+     "คลิปหนีบสาย (วางไว้ข้างเตียง)",
+     "Syringe หลายขนาด",
+     "Nasal cannula สำหรับ capnography",
+     "ชุดทำแผล ICD",
+     "ถุงมือ S/M/L และ sterile gloves"
+    ],
+    "medications": [
+     "Midazolam 1 mg IV ให้ซ้ำได้ตามแพทย์ผู้ทำหัตถการ — ยาจำลอง",
+     "Fentanyl 50 mcg IV ให้ซ้ำได้ตามแพทย์ผู้ทำหัตถการ — ยาจำลอง",
+     "Naloxone 0.4 mg/ml เจือจาง ให้ครั้งละ 0.04 mg IV ตามคำสั่งแพทย์ — ยาจำลอง",
+     "Flumazenil 0.2 mg IV ตามคำสั่งแพทย์ — ยาจำลอง",
+     "Morphine 2 mg IV ทุก 4 ชม. เมื่อปวด (ยาเดิม) — ยาจำลอง",
+     "1% Lidocaine 10 ml สำหรับฉีดเฉพาะที่ — ยาจำลอง"
+    ],
+    "moulage_props": [
+     "เครื่องหมายตำแหน่งใส่ ICD ที่ทรวงอกขวา",
+     "สิ่งระบายจำลองสีเหลืองปนเลือด 600 ml",
+     "ป้ายข้อมือผู้ป่วย",
+     "แฟ้มเวชระเบียนจำลอง"
+    ],
+    "manikin": "หุ่น High-Fidelity ผู้ใหญ่ + task trainer ใส่ ICD"
+   },
+   "references": {
+    "simulation": [
+     "INACSL Standards Committee. Healthcare Simulation Standards of Best Practice (2021).",
+     "Eppich W, Cheng A. Promoting Excellence and Reflective Learning in Simulation (PEARLS). Simul Healthc. 2015.",
+     "TeamSTEPPS 2.0 Pocket Guide, Agency for Healthcare Research and Quality."
+    ],
+    "clinical": [
+     "American Society of Anesthesiologists. Practice Guidelines for Moderate Procedural Sedation and Analgesia 2018.",
+     "SOP พยาบาลวิชาชีพ Critical Care Unit (CCD) - Core (SOP-CCD-NSO-001 Rev.01) หัวข้อ 5.9 หัตถการข้างเตียง/Time-out, 5.10 Moderate sedation, 5.11 การประเมินระบบประสาท ความปวด และ sedation",
+     "S/P-02.1-BHQ-010 Time-out / Universal protocol และ S/P-02.1-BHQ-011 Pain management (ต้องยืนยันฉบับปัจจุบัน)",
+     "British Thoracic Society. Guideline for Pleural Disease (2023)."
+    ]
+   },
+   "appendix": {
+    "cxr": "ก่อนทำ: large right pleural effusion · หลังทำ: ICD อยู่ในตำแหน่ง ปอดขวาขยายตัวบางส่วน — ภาพจำลอง",
+    "ekg": "Sinus rhythm 84-96 · State 2: sinus bradycardia 58",
+    "lab": "INR 1.1, Platelet 210,000 /µL, Hb 10.9 g/dL",
+    "imaging": "Ultrasound chest: right pleural effusion ปริมาณมาก ไม่มี loculation — ภาพจำลอง"
+   }
+  }
+ }
+];
+var CASES = CASES_C.concat(CASES_A, CASES_B);
 </script>
 <script>/* =====================================================================
    Minimal offline .docx writer  (store-only ZIP + WordprocessingML)
